@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">My Class</string>
+    <string name="label_must_fill">Required.</string>
+    <string name="todo">TODO</string>
+    <string name="todo2">TODO</string>
+    <string name="todo3">TODO</string>
+    <string name="todo4">TODO</string>
+    <string name="name">Name</string>
+    <string name="todo5">TODO</string>
+    <string name="school">School</string>
+    <string name="todo6">TODO</string>
+    <string name="phone">Phone</string>
+    <string name="colek">Colek</string>
+    <string name="chat_whatsapp">Chat WhatsApp</string>
+    <string name="todo7">TODO</string>
+    <string name="todo8">TODO</string>
+    <string name="todo9">TODO</string>
+    <string name="login">Login</string>
+    <string name="nomor_telephone">Nomor Telephone</string>
+    <string name="add_nomor_telephone">Add Nomor Telephone</string>
+    <string name="password">Password</string>
+    <string name="add_password">Add Password</string>
+    <string name="login2">Login</string>
+    <string name="don_t_have_an_accoun_sign_up">Don\'t have an accoun? Sign up</string>
+    <string name="todo10">TODO</string>
+    <string name="todo11">TODO</string>
+    <string name="todo12">TODO</string>
+    <string name="name2">Name</string>
+    <string name="todo13">TODO</string>
+    <string name="school2">School</string>
+    <string name="todo14">TODO</string>
+    <string name="phone2">Phone</string>
+    <string name="edit_password">Edit Password</string>
+    <string name="logout">Logout</string>
+    <string name="register">Register</string>
+    <string name="name3">Name</string>
+    <string name="add_name">Add Name</string>
+    <string name="nomor_telephone2">Nomor Telephone</string>
+    <string name="add_nomor_telphone">Add Nomor Telphone</string>
+    <string name="filter_school">Filter School</string>
+    <string name="password2">Password</string>
+    <string name="add_password3">Add Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="add_confirm_password">Add Confirm Password</string>
+    <string name="register2">Register</string>
+    <string name="have_an_accoun_log_in">Have an accoun? Log in</string>
+    <string name="todo15">TODO</string>
+    <string name="todo16">TODO</string>
+    <string name="marshanda_fitri_riyani">Marshanda Fitri Riyani</string>
+    <string name="smk_n_11_semarang">SMK N 11 Semarang</string>
+    <string name="enter_a_new_name">Enter a New Name</string>
+    <string name="add_name2">Add Name...</string>
+    <string name="save">Save</string>
+    <string name="password_old">Password old</string>
+    <string name="password_new">Password New</string>
+    <string name="confirm_password2">Confirm Password</string>
+    <string name="save2">Save</string>
+    <string name="filter_school2">Filter School</string>
+    <string name="save3">Save</string>
+    <string name="do_you_want_logout">Do you want logout?</string>
+    <string name="no">No</string>
+    <string name="yes_i_want_logout">Yes, i want Logout</string>
+
+    <string-array name="filter_school">
+        <item>All</item>
+        <item>SMK Negeri 11 Semarang</item>
+        <item>SMK Negeri 3 Kendal</item>
+        <item>SMK Wikrama Jepara</item>
+    </string-array>
+
+</resources>
