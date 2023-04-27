@@ -42,7 +42,7 @@
             android:autofillHints="phone"
             android:background="@drawable/custom_layout_frame_green"
             android:hint="@string/add_name"
-            android:inputType="textEmailAddress"
+            android:inputType="textPersonName"
             android:padding="@dimen/_10sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_10ssp"
@@ -68,7 +68,7 @@
             android:autofillHints="phone"
             android:background="@drawable/custom_layout_frame_green"
             android:hint="@string/add_nomor_telphone"
-            android:inputType="textEmailAddress"
+            android:inputType="phone"
             android:padding="@dimen/_10sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_10ssp"
@@ -85,31 +85,46 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp" />
 
-        <Spinner
-            android:id="@+id/et_filter_school_register"
-            android:layout_width="@dimen/_200sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@drawable/custom_layout_frame_green"
-            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-            android:hint="Add School"
-            android:padding="@dimen/_8sdp"
-            android:entries="@array/filter_school"
-            android:textSize="@dimen/_10ssp" />
 
-       <!-- <Spinner
-            android:id="@+id/et_filter_school_register"
-            android:layout_width="@dimen/_200sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@drawable/custom_layout_frame_green"
-            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-            android:entries="@array/filter_school"
-            android:gravity="center"
-            android:padding="@dimen/_8sdp"
-            android:textSize="@dimen/_10ssp" />-->
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteSpinner"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_layout_frame_green"
+                android:dropDownAnchor="@id/autoCompleteSpinner"
+                android:hint="@string/select_school"
+                android:padding="@dimen/_8sdp"
+                android:textSize="@dimen/_10ssp"
+                android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"/>
+
+
+        <!--     <Spinner
+                 android:id="@+id/et_filter_school_register"
+                 android:layout_width="@dimen/_200sdp"
+                 android:layout_height="@dimen/_35sdp"
+                 android:layout_gravity="center"
+                 android:layout_marginTop="@dimen/_5sdp"
+                 android:background="@drawable/custom_layout_frame_green"
+                 android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+                 android:hint="Add School"
+                 android:padding="@dimen/_8sdp"
+                 android:textSize="@dimen/_10ssp"
+                 android:entries="@array/filter_school"
+                  />-->
+
+        <!-- <Spinner
+             android:id="@+id/et_filter_school_register"
+             android:layout_width="@dimen/_200sdp"
+             android:layout_height="@dimen/_35sdp"
+             android:layout_gravity="center"
+             android:layout_marginTop="@dimen/_5sdp"
+             android:background="@drawable/custom_layout_frame_green"
+             android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+             android:entries="@array/filter_school"
+             android:gravity="center"
+             android:padding="@dimen/_8sdp"
+             android:textSize="@dimen/_10ssp" />-->
 
 
         <TextView
@@ -160,6 +175,7 @@
             android:textSize="@dimen/_13ssp" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputConfirmPassword"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_35sdp"
@@ -185,13 +201,29 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/tvPasswordNotMatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_60sdp"
+            android:gravity="start"
+            android:text="Password didn't match"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone"
+            android:textColor="@color/text_red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputConfirmPassword" />
+
+
+        <TextView
             android:id="@+id/btn_register"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_marginTop="@dimen/_30ssp"
             android:background="@drawable/custom_bg_btn_satu"
+            android:gravity="center"
             android:text="@string/register2"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -212,7 +244,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_60sdp"
             android:contentDescription="@string/todo15"
             android:src="@drawable/img_ellipse" />
     </LinearLayout>

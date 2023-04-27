@@ -1,10 +1,14 @@
 package com.maruchan.myclass.ui.register
 
 import android.os.Bundle
-import android.util.Log
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -13,26 +17,28 @@ import com.crocodic.core.extension.*
 import com.maruchan.myclass.R
 import com.maruchan.myclass.base.BaseActivity
 import com.maruchan.myclass.data.list.ListSchool
+import com.maruchan.myclass.data.list.ListSchoolTwo
 import com.maruchan.myclass.databinding.ActivityRegisterBinding
 import com.maruchan.myclass.ui.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>(R.layout.activity_register)  {
+class RegisterActivity :
+    BaseActivity<ActivityRegisterBinding, RegisterViewModel>(R.layout.activity_register) {
 
-/*    private var filter: String? = null*/
-    private  val listSekolah = ArrayList<ListSchool>()
+    private val listSchool = ArrayList<ListSchoolTwo?>()
+    private var schoolId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        getlistSekolah()
-        spinner()
+        initClick()
+        getListSchool()
+        autocompleteSpinner()
+        observe()
 
-
-
-    /*    ArrayAdapter(this, android.R.layout.simple_spinner_item, listSekolah).also { adapter ->
+     /*   ArrayAdapter(this, android.R.layout.simple_spinner_item, listSekolah).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.etFilterSchoolRegister.adapter = adapter
         }
@@ -52,124 +58,114 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
 
             }
 
-        }*/
-
-      /*  binding.etFilterSchoolRegister.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                p0: AdapterView<*>?,
-                p1: View?,
-                p2: Int,
-                p3: Long
-            ){
-                filter = if (p2 == 0) {
-                    null
-                }else{
-                    binding.etFilterSchoolRegister.selectedItem as String
-                }
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                filter = null
-            }
-        }*/
-
-
-
-        binding.tvLogInRegister.setOnClickListener{
-            openActivity<LoginActivity>()
         }
+
+*/
+    }
+
+
+    private fun initClick() {
         binding.btnRegister.setOnClickListener {
-            if (binding.etNameRegister.isEmptyRequired(R.string.label_must_fill) ||
-                binding.etPhoneRegister.isEmptyRequired(R.string.label_must_fill) ||
-                binding.etPasswordRegister.isEmptyRequired(R.string.label_must_fill)
-            ) {
-                return@setOnClickListener
-            }
-
-
-            val name = binding.etNameRegister.textOf()
-            val phone = binding.etPhoneRegister.textOf()
-//            val school = binding.etFilterSchoolRegister.
-            val password = binding.etPasswordRegister.textOf()
-
-//            viewModel.register(name, phone,school,password)
-
+            register()
         }
 
+        binding.tvLogInRegister.setOnClickListener {
+           finish()
+        }
+    }
+    private fun tvLogin(){
+        val spannableString = SpannableString("Have an accoun? Log in")
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(view: View) {
+                openActivity<LoginActivity>()
+            }
+        }
+        spannableString.setSpan(clickableSpan, 22, spannableString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.tvLogInRegister.text = spannableString
+        binding.tvLogInRegister.movementMethod = LinkMovementMethod.getInstance() //  TODO: Required for clickable spans to work
+    }
+
+    private fun getListSchool() {
+        viewModel.getListSekolah()
+    }
+
+    private fun register() {
+        val name = binding.etNameRegister.textOf()
+        val phone = binding.etPhoneRegister.textOf()
+        val password = binding.etPasswordRegister.textOf()
+        val confirmPassword = binding.etConfirmPasswordRegister.textOf()
+
+        if (binding.etNameRegister.isEmptyRequired(R.string.label_must_fill) ||
+            binding.etPhoneRegister.isEmptyRequired(R.string.label_must_fill) ||
+            binding.etPasswordRegister.isEmptyRequired(R.string.label_must_fill) ||
+            binding.etConfirmPasswordRegister.isEmptyRequired(R.string.label_must_fill)
+        ) {
+            return
+        }
+        if (password != confirmPassword) {
+            binding.tvPasswordNotMatch.visibility = View.VISIBLE
+        } else {
+            binding.tvPasswordNotMatch.visibility = View.GONE
+            viewModel.register(name, phone, schoolId, password)
+        }
+
+    }
+
+    private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
-                            ApiStatus.LOADING -> loadingDialog.show("Please Wait Register")
+                            ApiStatus.LOADING -> loadingDialog.show("Register....in")
                             ApiStatus.SUCCESS -> {
-                                loadingDialog.show("Succes")
+                                loadingDialog.dismiss()
                                 openActivity<LoginActivity>()
                                 finish()
                             }
                             ApiStatus.ERROR -> {
                                 disconnect(it)
-                                loadingDialog.dismiss()
+                                binding.root.snacked("Register Failed")
                                 loadingDialog.setResponse(it.message ?: return@collect)
+
                             }
                             else -> loadingDialog.setResponse(it.message ?: return@collect)
                         }
                     }
                 }
                 launch {
-                    viewModel.saveListSekolah.collect{ data ->
-                        listSekolah.clear()
-                        Log.d("cek dari api", "data: $data")
-                        listSekolah.addAll(data)
+                    viewModel.saveListSekolah.collect { school ->
+                        listSchool.addAll(school)
+                    //  TODO: Panggil fungsi untuk spinner item dengan data yang diambil
                     }
                 }
             }
         }
 
     }
-    private fun getlistSekolah() {
-            viewModel.getListSekolah()
+
+    private fun autocompleteSpinner() {
+        val autoCompleteSpinner = findViewById<AutoCompleteTextView>(R.id.autoCompleteSpinner)
+        val options = arrayListOf("Pilih Sekolah") // untuk mengganti pilihan anda sendiri
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listSchool)
+        autoCompleteSpinner.setAdapter(adapter)
+
+        // TODO:menampilkan dropdown saat itmenya diklik
+        autoCompleteSpinner.setOnClickListener {
+            autoCompleteSpinner.showDropDown()
+            autoCompleteSpinner.setDropDownVerticalOffset(-autoCompleteSpinner.height)
+
         }
 
-    private fun spinner(){
-        var items = arrayListOf<String>("pilih sekolah")
-        listSekolah.forEach{
-            it.sekolah?.let { it1 -> items.add(it1) }
+        autoCompleteSpinner.setOnItemClickListener { parent, view, position, id ->
+            // TODO:untuk selected itemenya
+            val selectedItem = listSchool[position]
+            schoolId = selectedItem?.sekolahId!!
+            Toast.makeText(this@RegisterActivity, "Selected: $schoolId", Toast.LENGTH_SHORT).show()
+
+
         }
-        Log.d("cek item spinner", "items: $items")
-        val adapterSpinner = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
-        binding.etFilterSchoolRegister.adapter = adapterSpinner
-
-        binding.etFilterSchoolRegister.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                // Handle item selection here
-                val selectedItem = items[position]
-                // Do something with the selected item
-//                binding.etSchool.text = selectedItem
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Handle nothing selected event here
-            }
-        }
-
     }
-
-    /*private fun register() {
-        val name = binding.etName.textOf()
-        val phone = binding.etPhone.textOf()
-        val password = binding.etPassword.textOf()
-        val confirm = binding.etConfirmPass.textOf()
-
-        if (binding.etName.isEmptyRequired(R.string.mustFill) || binding.etPhone.isEmptyRequired(R.string.mustFill)
-            || binding.etPhone.isEmptyRequired(R.string.mustFill) || binding.etConfirmPass.isEmptyRequired(R.string.mustFill))
-        {
-            return
-        }
-        if (password != confirm){
-            binding.textInputConfirmPassword.error = "Password Not Match"
-            return
-        }
-        binding.root.snacked("register")
-        }*/
 }
+
+

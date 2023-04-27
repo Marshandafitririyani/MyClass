@@ -7,6 +7,7 @@ import com.crocodic.core.extension.toList
 import com.google.gson.Gson
 import com.maruchan.myclass.api.ApiService
 import com.maruchan.myclass.base.BaseViewModel
+import com.maruchan.myclass.data.constant.Const
 import com.maruchan.myclass.data.list.ListSchool
 import com.maruchan.myclass.data.session.Session
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,11 +24,14 @@ class DetailFriendsViewModel @Inject constructor(
     private val gson: Gson,
     private val session: Session
 
-) : BaseViewModel(){
+) : BaseViewModel() {
     private val _saveListSekolah = MutableSharedFlow<ListSchool>()
     val saveListSekolah = _saveListSekolah.asSharedFlow()
 
-    fun getListSekolah(id:Int) = viewModelScope.launch {
+    private val _getNotifSave = MutableSharedFlow<ApiResponse>()
+    val getNotifSave = _getNotifSave.asSharedFlow()
+
+    fun getListSekolah(id: Int) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
             { apiService.getListSekolah() },
@@ -46,4 +51,63 @@ class DetailFriendsViewModel @Inject constructor(
             }
         )
     }
+
+    fun like(id: Int) = viewModelScope.launch {
+//        _apiResponse.emit(ApiResponse().responseLoading()) // TODO: memberi tahu kalau sedang ada proses
+        ApiObserver(
+            { apiService.like(id) },
+            true,
+            object : ApiObserver.ResponseListener {
+                override suspend fun onSuccess(response: JSONObject) {
+//                    val liked =
+//                        response.getBoolean("liked") // TODO: mendapatkan status sekarang liked atau unlike
+                    _apiResponse.emit(ApiResponse().responseSuccess("liked"))
+                    Timber.d("cek api like $response")
+                }
+            }
+        )
+
+    }
+    fun unLike(id: Int) = viewModelScope.launch {
+//        _apiResponse.emit(ApiResponse().responseLoading()) // TODO: memberi tahu kalau sedang ada proses
+        ApiObserver(
+            { apiService.unLike(id) },
+            true,
+            object : ApiObserver.ResponseListener {
+                override suspend fun onSuccess(response: JSONObject) {
+//                    val liked =
+//                        response.getBoolean("liked") // TODO: mendapatkan status sekarang liked atau unlike
+                    _apiResponse.emit(ApiResponse().responseSuccess("unLiked"))
+                    Timber.d("cek api like $response")
+                }
+            }
+        )
+
+    }
+    fun getNotif(to:String,title: String, body: String) = viewModelScope.launch {
+        _apiResponse.emit(ApiResponse().responseLoading())
+        ApiObserver(
+            { apiService.getNotif(to,title, body) },
+            false,
+            object : ApiObserver.ResponseListener {
+                override suspend fun onSuccess(response: JSONObject) {
+//                    val data = response.getJSONObject(ApiCode.DATA).toObject<User>(gson)
+                    _getNotifSave.emit(ApiResponse().responseSuccess())
+                }
+
+            })
+    }
+
+
+    /*fun like2() = viewModelScope.launch {
+        ApiObserver(
+            { apiService.like() },
+            false,
+            object : ApiObserver.ResponseListener {
+                override suspend fun onSuccess(response: JSONObject) {
+
+                }
+            }
+        )
+    }*/
 }

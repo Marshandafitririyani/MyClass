@@ -7,6 +7,8 @@
         <variable
             name="detail"
             type="com.maruchan.myclass.data.list.ListFriends" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,18 +17,70 @@
         android:background="@color/green_10"
         tools:context=".ui.profile.ProfileActivity">
 
+       <!-- <ImageButton
+            android:id="@+id/btn_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:src="@drawable/ic_favorite"
+            android:visibility='@{detail.like ? View.GONE : View.VISIBLE}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_unfav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:src="@drawable/ic_favorite_frame"
+            android:visibility='@{detail.like ? View.VISIBLE : View.GONE}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+-->
         <ImageView
+            android:id="@+id/btn_like"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_200sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:contentDescription="@string/todo"
             android:foreground="?selectableItemBackground"
-            android:src="@drawable/ic_favorite_frame"
+            android:background='@{detail.like_by_you ? @drawable/ic_favorite : @drawable/ic_favorite_frame}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!--<ImageView
+            android:id="@+id/iv_unlike"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_200sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:contentDescription="@string/todo"
+            android:foreground="?selectableItemBackground"
+            android:src="@drawable/ic_favorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>-->
+
+
+     <!--   <ImageView
+
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.917" />-->
         <ImageView
             android:id="@+id/iv_back_detail"
             android:layout_width="@dimen/_40sdp"
@@ -48,22 +102,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_60sdp"
             imageUrl='@{detail.foto}'
-            android:src="@color/green_40"
+            android:src="@drawable/ic_person"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_marginTop="@dimen/_135sdp"
-            android:background="@drawable/custom_button_sircle_full"
-            android:contentDescription="@string/todo3"
-            android:foreground="?selectableItemBackground"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/ic_edit_pen_white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.658"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -306,7 +346,7 @@
             android:layout_height="@dimen/_35sdp"
             android:layout_gravity="start"
             android:gravity="center"
-            android:layout_marginTop="@dimen/_520sdp"
+            android:layout_marginTop="@dimen/_500sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/custom_bg_btn_tiga"
             android:foreground="?selectableItemBackground"
@@ -326,7 +366,7 @@
             android:layout_gravity="end"
             android:gravity="center"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_520sdp"
+            android:layout_marginTop="@dimen/_500sdp"
             android:background="@drawable/custom_bg_btn_empat"
             android:foreground="?selectableItemBackground"
             android:text="@string/chat_whatsapp"

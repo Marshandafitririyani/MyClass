@@ -2,23 +2,31 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="user"
+            type="com.maruchan.myclass.data.room.user.User" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/transparent"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
+            android:background="@color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardCornerRadius="@dimen/_15sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_135sdp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/custom_layout_frame_green"
                 android:orientation="vertical">
 
@@ -37,19 +45,21 @@
                     android:layout_margin="@dimen/_8sdp"
                     android:autofillHints="username"
                     android:hint="@string/add_name2"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:text='@{user.nama}'
                     android:inputType="textPersonName"
                     android:textSize="@dimen/_15ssp" />
 
                 <TextView
                     android:id="@+id/btn_save"
-                    android:layout_width="@dimen/_240sdp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:background="@drawable/custom_buttom_popup"
-                    android:foreground="?selectableItemBackground"
                     android:text="@string/save"
                     android:textAllCaps="false"
+                    android:layout_margin="@dimen/_8sdp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_13ssp"
                     app:layout_constraintEnd_toEndOf="parent"

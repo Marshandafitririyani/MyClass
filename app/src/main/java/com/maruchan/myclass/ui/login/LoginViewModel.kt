@@ -30,10 +30,10 @@ class LoginViewModel @Inject constructor(
     private val _responseAPI = MutableSharedFlow<ApiResponse>()
     val responseAPI = _responseAPI.asSharedFlow()
 
-    fun login(phone: String, password: String) = viewModelScope.launch {
+    fun login(phone: String, password: String, deviceToken: String) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
-            { apiService.login(phone, password) },
+            { apiService.login(phone, password,deviceToken) },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {

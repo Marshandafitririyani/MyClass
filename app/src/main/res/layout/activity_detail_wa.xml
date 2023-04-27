@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+<variable
+    name="detail"
+    type="com.maruchan.myclass.ui.detailwa.DetailWaActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/green_10"
+        tools:context=".ui.detailwa.DetailWaActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chat WhatsApp"
+            android:textSize="@dimen/_18ssp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/green"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome, please send a message to your friend"
+            android:textSize="@dimen/_13ssp"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:padding="@dimen/_10sdp"/>
+
+        <!--<EditText
+            android:id="@+id/ednum"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_gravity="center"
+
+            android:autofillHints="phone"
+            android:background="@drawable/custom_layout_frame_abu"
+            android:hint="@string/add_nomor_telephone"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_10ssp"
+            tools:ignore="TextFields" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/teks_input_layout_phone"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/_260sdp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:helperTextTextColor="@color/green_40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/edtnum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:autofillHints=""
+                android:drawableStart="@drawable/ic_phone"
+                android:drawablePadding="@dimen/_8sdp"
+               android:hint="Phone"
+                android:inputType="phone"
+                app:counterMaxLength="21"
+                app:hintEnabled="false"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/teks_input_layout_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/_260sdp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:helperTextTextColor="@color/green_40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/edtsms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:autofillHints=""
+                android:drawableStart="@drawable/ic_edit_pen"
+                android:drawablePadding="@dimen/_8sdp"
+                android:hint="Text"
+                android:inputType="text"
+                app:counterMaxLength="21"
+                app:hintEnabled="false"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--<EditText
+
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/custom_layout_frame_abu"
+            android:hint="@string/add_nomor_telephone"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_10ssp"
+            tools:ignore="TextFields" />-->
+
+        <TextView
+            android:id="@+id/btnsend"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/custom_bg_btn_dua"
+            android:foreground="?selectableItemBackground"
+            android:text="Send"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_15ssp" />
+
+
+      <!--  <Button
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Send it!!" />-->
+
+
+    </LinearLayout>
+</layout>

@@ -27,19 +27,20 @@
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/todo10" />
 
-
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_profile"
             android:layout_width="@dimen/_110sdp"
             android:layout_height="@dimen/_110sdp"
             android:layout_gravity="center"
+            imageUrl='@{user.foto}'
             android:layout_marginTop="@dimen/_60sdp"
-            android:src="@drawable/img_plashlder"
+            android:src="@drawable/img_edit_poto"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/iv_image_edit_profil"
+            android:id="@+id/iv_image_save_edit_profil"
             android:layout_width="@dimen/_35sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_135sdp"
@@ -190,7 +191,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/tv_school_profile"
                     android:layout_width="@dimen/_240sdp"
                     android:layout_height="@dimen/_30sdp"
@@ -199,7 +200,25 @@
                     android:foreground="?selectableItemBackground"
                     android:inputType="text"
                     android:padding="@dimen/_5sdp"
-                    android:text='@{user.sekolah_id}'
+                    android:hint="Empty School"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.592"
+                    tools:ignore="RtlSymmetry,TextViewEdits"
+                    app:drawableEndCompat="@drawable/ic_edit_pen" />-->
+
+                <AutoCompleteTextView
+                    android:id="@+id/tv_school_profile"
+                    android:layout_width="@dimen/_240sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:autofillHints="text"
+                    android:background="@color/transparent"
+                    android:foreground="?selectableItemBackground"
+                    android:inputType="text"
+                    android:padding="@dimen/_5sdp"
                     android:hint="Empty School"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
@@ -314,7 +333,7 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginTop="@dimen/_520sdp"
+            android:layout_marginTop="@dimen/_35sdp"
             android:background="@drawable/custom_bg_btn_dua"
             android:foreground="?selectableItemBackground"
             android:text="@string/logout"
@@ -323,7 +342,7 @@
             android:textSize="@dimen/_13ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/btn_edit_password_profile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

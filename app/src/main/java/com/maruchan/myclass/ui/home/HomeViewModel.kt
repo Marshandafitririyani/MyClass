@@ -9,6 +9,7 @@ import com.crocodic.core.extension.toObject
 import com.google.gson.Gson
 import com.maruchan.myclass.api.ApiService
 import com.maruchan.myclass.base.BaseViewModel
+import com.maruchan.myclass.data.constant.Const
 import com.maruchan.myclass.data.list.ListFriends
 import com.maruchan.myclass.data.list.ListSchool
 import com.maruchan.myclass.data.room.user.User
@@ -28,11 +29,14 @@ class HomeViewModel @Inject constructor(
     private val session: Session
 
 ) : BaseViewModel(){
-    private val _responseAPI = MutableSharedFlow<ApiResponse>()
+    private val _responseAPI = MutableSharedFlow<List<ListFriends>>()
     val responseAPI = _responseAPI.asSharedFlow()
 
     private val _responseSave = MutableSharedFlow<List<ListFriends>>()
     val responseSave = _responseSave.asSharedFlow()
+
+private val _responseRefls = MutableSharedFlow<List<ListFriends>>()
+    val responseRefls = _responseRefls.asSharedFlow()
 
     private val _saveListSekolah = MutableSharedFlow<List<ListSchool>>()
     val saveListSekolah = _saveListSekolah.asSharedFlow()
@@ -46,7 +50,7 @@ class HomeViewModel @Inject constructor(
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
 //                    val status = response.getInt(ApiCode.STATUS)
-                    val data = response.toObject<User>(gson)
+                    val data = response.getJSONObject(ApiCode.DATA).toObject<User>(gson)
                     session.saveUser(data)
                     _apiResponse.emit(ApiResponse().responseSuccess())
                 }
@@ -71,6 +75,7 @@ class HomeViewModel @Inject constructor(
             }
         )
     }
+
 /*    fun getListSekolah() = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(

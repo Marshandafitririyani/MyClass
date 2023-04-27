@@ -10,6 +10,7 @@ import com.google.gson.Gson
 import com.maruchan.myclass.api.ApiService
 import com.maruchan.myclass.base.BaseViewModel
 import com.maruchan.myclass.data.list.ListSchool
+import com.maruchan.myclass.data.list.ListSchoolTwo
 import com.maruchan.myclass.data.session.Session
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,10 +29,10 @@ class RegisterViewModel @Inject constructor(
     private val _responseAPI = MutableSharedFlow<ApiResponse>()
     val responseAPI = _responseAPI.asSharedFlow()
 
-    private val _saveListSekolah = MutableSharedFlow<List<ListSchool>>()
+    private val _saveListSekolah = MutableSharedFlow<List<ListSchoolTwo>>()
     val saveListSekolah = _saveListSekolah.asSharedFlow()
 
-        fun register(name: String, phone: String,school: String?, password: String) = viewModelScope.launch {
+        fun register(name: String, phone: String, school: Int?, password: String) = viewModelScope.launch {
             _apiResponse.emit(ApiResponse().responseLoading())
             ApiObserver(
                 { apiService.register(name, phone,school, password) },
@@ -46,7 +47,7 @@ class RegisterViewModel @Inject constructor(
                 })
         }
 
-    fun getListSekolah() = viewModelScope.launch {
+/*    fun getListSekolah() = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
             { apiService.getListSekolah() },
@@ -57,8 +58,8 @@ class RegisterViewModel @Inject constructor(
                     _saveListSekolah.emit(data)
 
 //                    val school = data.filter { it.sekolah_id == id}
-                /*    val school = data.last { it.sekolah_id == id }
-                    _saveListSekolah.emit(school)*/
+                *//*    val school = data.last { it.sekolah_id == id }
+                    _saveListSekolah.emit(school)*//*
                 }
 
                 override suspend fun onError(response: ApiResponse) {
@@ -66,5 +67,20 @@ class RegisterViewModel @Inject constructor(
                 }
             }
         )
+    }*/
+    fun getListSekolah() = viewModelScope.launch {
+        ApiObserver({ apiService.getListSekolah() }, false, object : ApiObserver.ResponseListener {
+            override suspend fun onSuccess(response: JSONObject) {
+                val status = response.getInt(ApiCode.STATUS)
+                if (status == ApiCode.SUCCESS) {
+
+                    val data = response.getJSONArray(ApiCode.DATA).toList<ListSchoolTwo>(gson)
+                    _saveListSekolah.emit(data)
+
+                } else {
+                    val message = response.getString(ApiCode.MESSAGE)
+                }
+            }
+        })
     }
 }

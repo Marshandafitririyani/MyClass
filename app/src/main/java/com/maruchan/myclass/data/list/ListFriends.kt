@@ -8,6 +8,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ListFriends(
     @Expose
+    @SerializedName("id")
+    val id: Int?,@Expose
     @SerializedName("user_id")
     val user_id: Int?,
     @Expose
@@ -26,9 +28,18 @@ data class ListFriends(
     @SerializedName("foto")
     val foto: String?,
     @Expose
+    @SerializedName("nama_sekolah")
+    val nama_sekolah: String?,
+    @Expose
+    @SerializedName("device_token")
+    val device_token: String?,
+    @Expose
     @SerializedName("created_at")
     val createdAt: String?,
     @Expose
     @SerializedName("updated_at")
-    val updatedAt: String?
+    val updatedAt: String?,
+    @Expose
+    @SerializedName("like_by_you")
+    val like_by_you: Boolean?,
 ) : Parcelable

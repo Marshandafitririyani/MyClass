@@ -16,8 +16,8 @@
     <string name="todo8">TODO</string>
     <string name="todo9">TODO</string>
     <string name="login">Login</string>
-    <string name="nomor_telephone">Nomor Telephone</string>
-    <string name="add_nomor_telephone">Add Nomor Telephone</string>
+    <string name="nomor_telephone">Phone Number</string>
+    <string name="add_nomor_telephone">Add Phone</string>
     <string name="password">Password</string>
     <string name="add_password">Add Password</string>
     <string name="login2">Login</string>
@@ -35,23 +35,23 @@
     <string name="register">Register</string>
     <string name="name3">Name</string>
     <string name="add_name">Add Name</string>
-    <string name="nomor_telephone2">Nomor Telephone</string>
-    <string name="add_nomor_telphone">Add Nomor Telphone</string>
-    <string name="filter_school">Filter School</string>
+    <string name="nomor_telephone2">Phone Number</string>
+    <string name="add_nomor_telphone">Add Phone</string>
+    <string name="filter_school">School</string>
     <string name="password2">Password</string>
     <string name="add_password3">Add Password</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="add_confirm_password">Add Confirm Password</string>
+    <string name="add_confirm_password">Confirm Password</string>
     <string name="register2">Register</string>
-    <string name="have_an_accoun_log_in">Have an accoun? Log in</string>
+    <string name="have_an_accoun_log_in">Have an account? Log in</string>
     <string name="todo15">TODO</string>
     <string name="todo16">TODO</string>
     <string name="marshanda_fitri_riyani">Marshanda Fitri Riyani</string>
     <string name="smk_n_11_semarang">SMK N 11 Semarang</string>
-    <string name="enter_a_new_name">Enter a New Name</string>
+    <string name="enter_a_new_name">Enter A New Name</string>
     <string name="add_name2">Add Name...</string>
     <string name="save">Save</string>
-    <string name="password_old">Password old</string>
+    <string name="password_old">Password Old</string>
     <string name="password_new">Password New</string>
     <string name="confirm_password2">Confirm Password</string>
     <string name="save2">Save</string>
@@ -60,6 +60,8 @@
     <string name="do_you_want_logout">Do you want logout?</string>
     <string name="no">No</string>
     <string name="yes_i_want_logout">Yes, i want Logout</string>
+    <string name="msg_token_fmt" formatted="true"> %s Token Confirmed</string>
+    <string name="select_school">Select School</string>
 
     <string-array name="filter_school">
         <item>All</item>
