@@ -86,17 +86,17 @@
             android:textSize="@dimen/_13ssp" />
 
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteSpinner"
-                android:layout_width="@dimen/_200sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_gravity="center"
-                android:background="@drawable/custom_layout_frame_green"
-                android:dropDownAnchor="@id/autoCompleteSpinner"
-                android:hint="@string/select_school"
-                android:padding="@dimen/_8sdp"
-                android:textSize="@dimen/_10ssp"
-                android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"/>
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteSpinner"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_layout_frame_green"
+            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+            android:dropDownAnchor="@id/autoCompleteSpinner"
+            android:hint="@string/select_school"
+            android:padding="@dimen/_8sdp"
+            android:textSize="@dimen/_10ssp" />
 
 
         <!--     <Spinner
@@ -208,10 +208,10 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_60sdp"
             android:gravity="start"
-            android:text="Password didn't match"
+            android:text="@string/password_didn_t_match"
+            android:textColor="@color/text_red"
             android:textSize="@dimen/_12ssp"
             android:visibility="gone"
-            android:textColor="@color/text_red"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputConfirmPassword" />
 

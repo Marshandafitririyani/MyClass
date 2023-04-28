@@ -51,6 +51,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         }
 
         //TOdo:FirebaseMsgService
+        // todo:untuk jaga jaga
+        //todo:untuk mengambil device toennya
+        //todo:untuk mendeteksi, diambil disisni terus di set setValue,
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
@@ -58,10 +61,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             }
 
             // Get new FCM registration token
+            //todo: menerima hasil tugas fcmnya
             val token = task.result
 
             // Log and toast
-            val msg = getString(R.string.msg_token_fmt, token)
+            val msg = getString(R.string.msg_token_fmt, token) //todo:untuk menegecek aja
             Log.d(ContentValues.TAG, msg)
             session.setValue(Const.TOKEN.DEVICETOKEN, token)
 //            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
@@ -114,7 +118,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
         }
 
+
     }
+
 
 
 }

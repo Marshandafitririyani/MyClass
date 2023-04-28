@@ -9,9 +9,7 @@ import com.crocodic.core.extension.toObject
 import com.google.gson.Gson
 import com.maruchan.myclass.api.ApiService
 import com.maruchan.myclass.base.BaseViewModel
-import com.maruchan.myclass.data.constant.Const
 import com.maruchan.myclass.data.list.ListFriends
-import com.maruchan.myclass.data.list.ListSchool
 import com.maruchan.myclass.data.room.user.User
 import com.maruchan.myclass.data.session.Session
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,17 +33,12 @@ class HomeViewModel @Inject constructor(
     private val _responseSave = MutableSharedFlow<List<ListFriends>>()
     val responseSave = _responseSave.asSharedFlow()
 
-private val _responseRefls = MutableSharedFlow<List<ListFriends>>()
-    val responseRefls = _responseRefls.asSharedFlow()
 
-    private val _saveListSekolah = MutableSharedFlow<List<ListSchool>>()
-    val saveListSekolah = _saveListSekolah.asSharedFlow()
-
-    fun getToken(
+    fun getUser(
     ) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
-            { apiService.getToken() },
+            { apiService.getUserToken() },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
@@ -75,26 +68,4 @@ private val _responseRefls = MutableSharedFlow<List<ListFriends>>()
             }
         )
     }
-
-/*    fun getListSekolah() = viewModelScope.launch {
-        _apiResponse.emit(ApiResponse().responseLoading())
-        ApiObserver(
-            { apiService.getListSekolah() },
-            false,
-            object : ApiObserver.ResponseListener {
-                override suspend fun onSuccess(response: JSONObject) {
-                    val data = response.getJSONArray("data").toList<ListSekolah>(gson)
-
-//                    val schooll = data.filter { it.sekolah_id == id}
-//                    val school = data.last { it.sekolah_id == id }
-                    _saveListSekolah.emit(data)
-                }
-
-                override suspend fun onError(response: ApiResponse) {
-                    super.onError(response)
-                }
-            }
-        )
-    }*/
-
 }

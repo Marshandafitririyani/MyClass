@@ -7,7 +7,6 @@ import com.crocodic.core.extension.toList
 import com.google.gson.Gson
 import com.maruchan.myclass.api.ApiService
 import com.maruchan.myclass.base.BaseViewModel
-import com.maruchan.myclass.data.constant.Const
 import com.maruchan.myclass.data.list.ListSchool
 import com.maruchan.myclass.data.session.Session
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,14 +52,11 @@ class DetailFriendsViewModel @Inject constructor(
     }
 
     fun like(id: Int) = viewModelScope.launch {
-//        _apiResponse.emit(ApiResponse().responseLoading()) // TODO: memberi tahu kalau sedang ada proses
         ApiObserver(
             { apiService.like(id) },
             true,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-//                    val liked =
-//                        response.getBoolean("liked") // TODO: mendapatkan status sekarang liked atau unlike
                     _apiResponse.emit(ApiResponse().responseSuccess("liked"))
                     Timber.d("cek api like $response")
                 }
@@ -68,6 +64,7 @@ class DetailFriendsViewModel @Inject constructor(
         )
 
     }
+
     fun unLike(id: Int) = viewModelScope.launch {
 //        _apiResponse.emit(ApiResponse().responseLoading()) // TODO: memberi tahu kalau sedang ada proses
         ApiObserver(
@@ -84,10 +81,11 @@ class DetailFriendsViewModel @Inject constructor(
         )
 
     }
-    fun getNotif(to:String,title: String, body: String) = viewModelScope.launch {
+
+    fun getNotif(to: String, title: String, body: String) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
-            { apiService.getNotif(to,title, body) },
+            { apiService.getNotif(to, title, body) },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
@@ -97,17 +95,4 @@ class DetailFriendsViewModel @Inject constructor(
 
             })
     }
-
-
-    /*fun like2() = viewModelScope.launch {
-        ApiObserver(
-            { apiService.like() },
-            false,
-            object : ApiObserver.ResponseListener {
-                override suspend fun onSuccess(response: JSONObject) {
-
-                }
-            }
-        )
-    }*/
 }

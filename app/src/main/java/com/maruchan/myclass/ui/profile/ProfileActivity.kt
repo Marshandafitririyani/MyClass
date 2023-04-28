@@ -69,7 +69,8 @@ class ProfileActivity :
     private var photoFile: File? = null
     private val listSchoolFilter= ArrayList<ListSchoolTwo?>()
     private val listSchool = ArrayList<ListSchool>()
-    private var schoolId: Int = -1
+    private var schoolId: Int? = null
+    private var schoolIdStatic: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +83,8 @@ class ProfileActivity :
         val user = session.getUser()
         if (user != null) {
             binding.user = user
+            schoolId = user.sekolah_id
+            schoolIdStatic = user.sekolah_id
 //            user.foto
             Log.d("cek foto", "foto:${user.foto}")
             /*       school = user.user_id*/
@@ -133,25 +136,6 @@ class ProfileActivity :
         }
         binding.tvSchoolProfile.setOnClickListener {
             autocompleteSpinner()
-//            filterSchool()
-
-            /* val autoCompleteSpinner = findViewById<AutoCompleteTextView>(R.id.autoCompleteSpinner)
-             val options = arrayListOf("Pilih Sekolah") // untuk mengganti pilihan anda sendiri
-             val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listSchool)
-             autoCompleteSpinner.setAdapter(adapter)
-
-             // TODO:menampilkan dropdown saat itmenya diklik
-             autoCompleteSpinner.setOnClickListener {
-                 autoCompleteSpinner.showDropDown()
-                 autoCompleteSpinner.setDropDownVerticalOffset(-autoCompleteSpinner.height)
-             }
-             autoCompleteSpinner.setOnItemClickListener { parent, view, position, id ->
-                 // TODO:untuk selected itemenya
-                 val selectedItem = listSchool[position]
-                 schoolId = selectedItem?.sekolah_id!!
-                 Toast.makeText(this@ProfileActivity, "Selected: $schoolId", Toast.LENGTH_SHORT).show()
-             }*/
-
         }
         binding.ivImageSaveEditProfil.setOnClickListener {
             validateForm()
@@ -299,6 +283,7 @@ class ProfileActivity :
                             ApiStatus.SUCCESS -> {
                                 loadingDialog.show("succes")
                                 loadingDialog.dismiss()
+                                setResult(12345)
                                 finish()
                             }
                             ApiStatus.ERROR -> {
@@ -515,6 +500,7 @@ class ProfileActivity :
 
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
             binding.imgProfile.setImageBitmap(bitmap)
+            binding.ivImageSaveEditProfil.setImageResource(R.drawable.ic_check)
             photoFile = file
         } catch (e: Exception) {
             e.printStackTrace()
@@ -596,6 +582,7 @@ class ProfileActivity :
         // TODO:menampilkan dropdown saat itmenya diklik
         autoCompleteSpinner.setOnClickListener {
             autoCompleteSpinner.showDropDown()
+            binding.imgDropDrown.setImageResource(R.drawable.ic_baseline_arrow_drop_down_24)
             autoCompleteSpinner.setDropDownVerticalOffset(-autoCompleteSpinner.height)
 
         }
@@ -604,15 +591,20 @@ class ProfileActivity :
             // TODO:untuk selected itemenya
             val selectedItem = listSchoolFilter[position]
             schoolId = selectedItem?.sekolahId!!
+            binding.imgDropDrown.setImageResource(R.drawable.ic_check_profile)
             Toast.makeText(this@ProfileActivity, "Selected: $schoolId", Toast.LENGTH_SHORT).show()
-
-
         }
+        val btnSave = findViewById<ImageView>(R.id.img_drop_drown)
+        btnSave.setOnClickListener {
+            val user = session.getUser()
+            if (schoolId != schoolIdStatic) {
+                user?.nama?.let { nama -> viewModel.editProfile(name = nama, schoolId ) }
+            }
+    }
     }
 
 
-    private fun filterSchool(
-    ) {
+    private fun filterSchool() {
         // TODO: Create an alert builder
         val builder = AlertDialog.Builder(this)
 

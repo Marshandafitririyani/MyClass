@@ -107,13 +107,13 @@
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/black"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:background="@drawable/custom_bg_btn_satu"
                 android:foreground="?selectableItemBackground"
+                android:gravity="center"
                 android:text="@string/login2"
                 android:textAllCaps="false"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_15ssp" />
 
             <TextView

@@ -12,19 +12,9 @@ class ViewBindingHelper {
         @BindingAdapter(value = ["imageUrl"], requireAll = false)
         fun loadImageRecipe(view: ImageView, imageUrl: String?) {
 
-            /* view.setImageDrawable(null)
-
-            imageUrl?.let {
-                Glide
-                    .with(view.context)
-                    .load(imageUrl)
-                    .placeholder(R.drawable.img_loading)
-                    .error(R.drawable.img_error)
-                    .into(view)
-
-            }*/
             view.setImageDrawable(null)
 
+            //TODO: jika fotonya null maka akan menampilkan berikut
             if (imageUrl.isNullOrEmpty()) {
                 Glide
                     .with(view.context)
@@ -34,15 +24,13 @@ class ViewBindingHelper {
                     .error(R.drawable.img_edit_poto)
                     .into(view)
 
-
             } else {
+                //TODO:jika fotonya tidak null atau ada fotonya akan menampilkan foto yang ada pada user masing-masing
                 imageUrl.let {
                     Glide
                         .with(view.context)
                         .load(imageUrl)
                         .placeholder(R.drawable.img_loading)
-                        //                    .apply(RequestOptions.circleCropTransform())
-                        //                    .error(R.drawable.error)
                         .into(view)
 
                 }

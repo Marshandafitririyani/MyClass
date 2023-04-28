@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="user"
             type="com.maruchan.myclass.data.room.user.User" />
@@ -20,19 +22,19 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_240sdp"
+            android:contentDescription="@string/todo10"
             android:foreground="?selectableItemBackground"
             android:src="@drawable/ic_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/todo10" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_profile"
+            imageUrl='@{user.foto}'
             android:layout_width="@dimen/_110sdp"
             android:layout_height="@dimen/_110sdp"
             android:layout_gravity="center"
-            imageUrl='@{user.foto}'
             android:layout_marginTop="@dimen/_60sdp"
             android:src="@drawable/img_edit_poto"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,14 +47,14 @@
             android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_135sdp"
             android:background="@drawable/custom_button_sircle_full"
+            android:contentDescription="@string/todo11"
             android:foreground="?selectableItemBackground"
             android:padding="@dimen/_5sdp"
             android:src="@drawable/ic_edit_pen_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.658"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/todo11" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -79,12 +81,12 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginStart="@dimen/_24sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:contentDescription="@string/todo12"
                     android:src="@drawable/ic_person"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.076"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/todo12" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -113,23 +115,24 @@
 
                 <TextView
                     android:id="@+id/tv_name_profile"
-                    android:layout_width="@dimen/_240sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:autofillHints="text"
                     android:background="@color/transparent"
                     android:foreground="?selectableItemBackground"
+                    android:hint="@string/empty_name"
                     android:inputType="text"
                     android:padding="@dimen/_5sdp"
                     android:text='@{user.nama}'
-                    android:hint="Empty Name"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    app:drawableEndCompat="@drawable/ic_edit_pen"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.592"
-                    tools:ignore="RtlSymmetry,TextViewEdits"
-                    app:drawableEndCompat="@drawable/ic_edit_pen" />
+                    tools:ignore="RtlSymmetry,TextViewEdits" />
             </LinearLayout>
         </FrameLayout>
 
@@ -159,12 +162,12 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginStart="@dimen/_24sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:contentDescription="@string/todo13"
                     android:src="@drawable/ic_school"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.076"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/todo13" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -209,25 +212,49 @@
                     app:layout_constraintVertical_bias="0.592"
                     tools:ignore="RtlSymmetry,TextViewEdits"
                     app:drawableEndCompat="@drawable/ic_edit_pen" />-->
-
-                <AutoCompleteTextView
-                    android:id="@+id/tv_school_profile"
-                    android:layout_width="@dimen/_240sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:autofillHints="text"
-                    android:background="@color/transparent"
-                    android:foreground="?selectableItemBackground"
-                    android:inputType="text"
-                    android:padding="@dimen/_5sdp"
-                    android:hint="Empty School"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
+                
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.592"
-                    tools:ignore="RtlSymmetry,TextViewEdits"
-                    app:drawableEndCompat="@drawable/ic_edit_pen" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/tv_school_profile"
+                        android:layout_width="@dimen/_240sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:autofillHints="text"
+                        android:background="@color/transparent"
+                        android:foreground="?selectableItemBackground"
+                        android:hint="@string/empty_school"
+                        android:inputType="text"
+                        android:padding="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.592"
+                        tools:ignore="RtlSymmetry,TextViewEdits" />
+
+                    <ImageView
+                        android:id="@+id/img_drop_drown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:autofillHints="text"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="end"
+                        android:textSize="@dimen/_15ssp"
+                        android:src="@drawable/ic_edit_pen"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </FrameLayout>
+
+
             </LinearLayout>
         </FrameLayout>
 
@@ -257,12 +284,12 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginStart="@dimen/_24sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:contentDescription="@string/todo14"
                     android:src="@drawable/ic_phone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.076"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/todo14" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -296,10 +323,10 @@
                     android:autofillHints="text"
                     android:background="@color/transparent"
                     android:foreground="?selectableItemBackground"
+                    android:hint="@string/empty_phone"
                     android:inputType="text"
                     android:padding="@dimen/_5sdp"
                     android:text='@{user.nomor_telepon}'
-                    android:hint="Empty Phone"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -315,10 +342,10 @@
             android:layout_width="@dimen/_280sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_marginTop="@dimen/_485sdp"
             android:background="@drawable/custom_bg_btn_lima"
             android:foreground="?selectableItemBackground"
+            android:gravity="center"
             android:text="@string/edit_password"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -332,10 +359,10 @@
             android:layout_width="@dimen/_280sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_marginTop="@dimen/_35sdp"
             android:background="@drawable/custom_bg_btn_dua"
             android:foreground="?selectableItemBackground"
+            android:gravity="center"
             android:text="@string/logout"
             android:textAllCaps="false"
             android:textColor="@color/white"

@@ -9,7 +9,8 @@ import kotlinx.parcelize.Parcelize
 data class ListFriends(
     @Expose
     @SerializedName("id")
-    val id: Int?,@Expose
+    val id: Int?,
+    @Expose
     @SerializedName("user_id")
     val user_id: Int?,
     @Expose

@@ -21,8 +21,6 @@ data class User(
     val nomor_telepon: String?,
     @SerializedName("foto")
     val foto: String?,
-//    @SerializedName("password")
-//    val password: String?,
     @Expose
     @SerializedName("created_at")
     val createdAt: String?,

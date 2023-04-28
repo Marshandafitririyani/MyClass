@@ -66,7 +66,7 @@ class ProfileViewModel @Inject constructor(
     fun getToken(
     ) = viewModelScope.launch {
         ApiObserver(
-            { apiService.getToken() },
+            { apiService.getUserToken() },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {

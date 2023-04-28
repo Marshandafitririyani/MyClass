@@ -41,19 +41,10 @@
                     android:background="@drawable/custom_layout_frame_green"
                     android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
                     android:dropDownAnchor="@id/autoCompleteSpinner"
-                    android:hint="Add School"
+                    android:hint="@string/add_school"
                     android:padding="@dimen/_8sdp"
                     android:textSize="@dimen/_10ssp" />
 
-                <!--  <Spinner
-                      android:id="@+id/et_filter_school_item"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_gravity="center"
-                      android:layout_margin="@dimen/_10sdp"
-                      android:gravity="center"
-                      android:padding="@dimen/_10ssp" />
-  -->
                 <TextView
                     android:id="@+id/btn_save_edit_school"
                     android:layout_width="@dimen/_240sdp"

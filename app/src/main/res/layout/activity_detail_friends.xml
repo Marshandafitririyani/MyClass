@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="detail"
             type="com.maruchan.myclass.data.list.ListFriends" />
@@ -17,70 +18,19 @@
         android:background="@color/green_10"
         tools:context=".ui.profile.ProfileActivity">
 
-       <!-- <ImageButton
-            android:id="@+id/btn_fav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:src="@drawable/ic_favorite"
-            android:visibility='@{detail.like ? View.GONE : View.VISIBLE}'
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/btn_unfav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:src="@drawable/ic_favorite_frame"
-            android:visibility='@{detail.like ? View.VISIBLE : View.GONE}'
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
--->
         <ImageView
             android:id="@+id/btn_like"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_200sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:background='@{detail.like_by_you ? @drawable/ic_favorite : @drawable/ic_favorite_frame}'
             android:contentDescription="@string/todo"
             android:foreground="?selectableItemBackground"
-            android:background='@{detail.like_by_you ? @drawable/ic_favorite : @drawable/ic_favorite_frame}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!--<ImageView
-            android:id="@+id/iv_unlike"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_200sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:contentDescription="@string/todo"
-            android:foreground="?selectableItemBackground"
-            android:src="@drawable/ic_favorite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone"/>-->
-
-
-     <!--   <ImageView
-
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:textAllCaps="false"
-            android:textSize="@dimen/_18ssp"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.917" />-->
         <ImageView
             android:id="@+id/iv_back_detail"
             android:layout_width="@dimen/_40sdp"
@@ -97,11 +47,11 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_profile_detail"
+            imageUrl='@{detail.foto}'
             android:layout_width="@dimen/_110sdp"
             android:layout_height="@dimen/_110sdp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_60sdp"
-            imageUrl='@{detail.foto}'
             android:src="@drawable/ic_person"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -171,17 +121,17 @@
                     android:autofillHints="text"
                     android:background="@color/transparent"
                     android:foreground="?selectableItemBackground"
+                    android:hint="@string/empty_name"
                     android:inputType="text"
                     android:padding="@dimen/_5sdp"
                     android:text='@{detail.nama}'
-                    android:hint="Marshanda Fitri Riyani"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.592"
-                    tools:ignore="RtlSymmetry" />
+                    tools:ignore="RtlSymmetry,TextViewEdits" />
             </LinearLayout>
         </FrameLayout>
 
@@ -248,17 +198,17 @@
                     android:autofillHints="text"
                     android:background="@color/transparent"
                     android:foreground="?selectableItemBackground"
+                    android:hint="@string/empty_school"
                     android:inputType="text"
                     android:padding="@dimen/_5sdp"
                     android:text='@{detail.sekolah_id}'
-                    android:hint="SMK N 11 Semarang"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.592"
-                    tools:ignore="RtlSymmetry" />
+                    tools:ignore="RtlSymmetry,TextViewEdits" />
             </LinearLayout>
         </FrameLayout>
 
@@ -326,9 +276,9 @@
                     android:autofillHints="text"
                     android:background="@color/transparent"
                     android:foreground="?selectableItemBackground"
+                    android:hint="@string/empty_phone"
                     android:inputType="phone"
                     android:padding="@dimen/_5sdp"
-                    android:hint="08966663"
                     android:text='@{detail.nomor_telepon}'
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
@@ -345,11 +295,11 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_gravity="start"
-            android:gravity="center"
             android:layout_marginTop="@dimen/_500sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/custom_bg_btn_tiga"
             android:foreground="?selectableItemBackground"
+            android:gravity="center"
             android:text="@string/colek"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -364,11 +314,11 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_gravity="end"
-            android:gravity="center"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_500sdp"
             android:background="@drawable/custom_bg_btn_empat"
             android:foreground="?selectableItemBackground"
+            android:gravity="center"
             android:text="@string/chat_whatsapp"
             android:textAllCaps="false"
             android:textColor="@color/white"

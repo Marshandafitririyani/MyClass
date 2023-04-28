@@ -36,9 +36,6 @@ interface ApiService {
         @Part foto : MultipartBody.Part?
     ) : String
 
-    @POST("api/data_user")
-    suspend fun getToken(): String
-
     @FormUrlEncoded
     @POST("api/getnotif")
     suspend fun getNotif(
@@ -46,6 +43,16 @@ interface ApiService {
         @Field("title") title: String?,
         @Field("body") body: String?
     ): String
+
+    @FormUrlEncoded
+    @POST("api/editpassword")
+    suspend fun editPassword(
+        @Field("current_password") current_password: String?,
+        @Field("new_password") new_password: String?
+    ): String
+
+    @POST("api/data_user")
+    suspend fun getUserToken(): String
 
     @POST("api/like/{id}")
     suspend fun like(
@@ -57,24 +64,11 @@ interface ApiService {
         @Path("id") id: Int?
     ): String
 
-    @FormUrlEncoded
-    @POST("api/editpassword")
-    suspend fun editPassword(
-        @Field("current_password") current_password: String?,
-        @Field("new_password") new_password: String?
-    ): String
-
-    @DELETE("api/deleteuser/{id}")
-    suspend fun delete(): String
-
     @POST("api/logout")
     suspend fun logout(): String
 
     @GET("api/listsekolah")
     suspend fun getListSekolah(): String
-
-    @GET("api/listuser")
-    suspend fun getList(): String
 
     @GET("api/myfriend")
     suspend fun getListFriend(): String

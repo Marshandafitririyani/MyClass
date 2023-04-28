@@ -1,7 +1,6 @@
 package com.maruchan.myclass.ui.home
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -16,7 +15,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.crocodic.core.api.ApiStatus
 import com.crocodic.core.base.adapter.ReactiveListAdapter
 import com.crocodic.core.extension.createIntent
-import com.crocodic.core.extension.openActivity
 import com.crocodic.core.extension.tos
 import com.maruchan.myclass.R
 import com.maruchan.myclass.base.BaseActivity
@@ -29,7 +27,6 @@ import com.maruchan.myclass.ui.detail.DetailFriendsActivity
 import com.maruchan.myclass.ui.profile.ProfileActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.activity_home) {
@@ -85,18 +82,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         askNotificationPermission()
         observe()
 
-
         val user = session.getUser()
         if (user != null) {
             binding.data = user
+
         }
+
 
 
         /*getlistSekolah(user?.user_id)*/
 
 
         binding.profileHome.setOnClickListener {
-            openActivity<ProfileActivity>()
+            activityLauncher.launch(createIntent<ProfileActivity>()) {
+                if (it.resultCode == 12345) {
+                    getToken()
+                }
+            }
         }
         /*      binding.ivMyClass.setOnClickListener {
 
@@ -182,7 +184,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                         friendsAll.addAll(Friends)
                         friends.addAll(Friends)
                         adapterFriends.submitList(friends)
-//                        adapterFriends.submitList(Friends)
+                        adapterFriends.submitList(Friends)
                         if (friends.isEmpty()) {
                             binding.tvEmpty.visibility = View.VISIBLE
                         } else {
@@ -206,9 +208,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             }
         }
     }
+/*    private fun getUser(){
+
+    }*/
 
     private fun getToken() {
-        viewModel.getToken()
+        viewModel.getUser()
     }
 
     private fun getListFriend() {
@@ -216,18 +221,22 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     }
 
     //todo:notofication
+    //untuk menunjukan ijin atau tidak dari askNotificationPermission
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
             // FCM SDK (and your app) can post notifications.
             tos("Permission Granted")
+            //todo:boleh
         } else {
             // TODO: Inform user that that your app will not show notifications.
             tos("Permission Denied")
+            //todo:tidak boleh
         }
     }
 
+    //todo: menunjukan aksinya
     private fun askNotificationPermission() {
         // This is only necessary for API level >= 33 (TIRAMISU)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
