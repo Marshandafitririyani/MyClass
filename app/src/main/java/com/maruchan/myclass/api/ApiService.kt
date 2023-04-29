@@ -38,7 +38,7 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("api/getnotif")
-    suspend fun getNotif(
+    suspend fun getNotify(
         @Field("to") to: String?,
         @Field("title") title: String?,
         @Field("body") body: String?
@@ -55,12 +55,12 @@ interface ApiService {
     suspend fun getUserToken(): String
 
     @POST("api/like/{id}")
-    suspend fun like(
+    suspend fun liked(
         @Path("id") id: Int?
     ): String
 
     @POST("api/unlike/{id}")
-    suspend fun unLike(
+    suspend fun unLiked(
         @Path("id") id: Int?
     ): String
 
@@ -68,7 +68,7 @@ interface ApiService {
     suspend fun logout(): String
 
     @GET("api/listsekolah")
-    suspend fun getListSekolah(): String
+    suspend fun getListSchool(): String
 
     @GET("api/myfriend")
     suspend fun getListFriend(): String

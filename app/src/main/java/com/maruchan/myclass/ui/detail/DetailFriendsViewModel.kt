@@ -24,22 +24,23 @@ class DetailFriendsViewModel @Inject constructor(
     private val session: Session
 
 ) : BaseViewModel() {
+    //TODO: untuk list sekolah
     private val _saveListSekolah = MutableSharedFlow<ListSchool>()
     val saveListSekolah = _saveListSekolah.asSharedFlow()
 
+    //TODO: untuk notifikasi
     private val _getNotifSave = MutableSharedFlow<ApiResponse>()
     val getNotifSave = _getNotifSave.asSharedFlow()
 
-    fun getListSekolah(id: Int) = viewModelScope.launch {
+    fun getListSchool(id: Int) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
-            { apiService.getListSekolah() },
+            { apiService.getListSchool() },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
                     val data = response.getJSONArray("data").toList<ListSchool>(gson)
 
-//                    val school = data.filter { it.sekolah_id == id}
                     val school = data.last { it.sekolah_id == id }
                     _saveListSekolah.emit(school)
                 }
@@ -51,9 +52,9 @@ class DetailFriendsViewModel @Inject constructor(
         )
     }
 
-    fun like(id: Int) = viewModelScope.launch {
+    fun liked(id: Int) = viewModelScope.launch {
         ApiObserver(
-            { apiService.like(id) },
+            { apiService.liked(id) },
             true,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
@@ -65,15 +66,12 @@ class DetailFriendsViewModel @Inject constructor(
 
     }
 
-    fun unLike(id: Int) = viewModelScope.launch {
-//        _apiResponse.emit(ApiResponse().responseLoading()) // TODO: memberi tahu kalau sedang ada proses
+    fun unLiked(id: Int) = viewModelScope.launch {
         ApiObserver(
-            { apiService.unLike(id) },
+            { apiService.unLiked(id) },
             true,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-//                    val liked =
-//                        response.getBoolean("liked") // TODO: mendapatkan status sekarang liked atau unlike
                     _apiResponse.emit(ApiResponse().responseSuccess("unLiked"))
                     Timber.d("cek api like $response")
                 }
@@ -82,14 +80,13 @@ class DetailFriendsViewModel @Inject constructor(
 
     }
 
-    fun getNotif(to: String, title: String, body: String) = viewModelScope.launch {
+    fun getNotify(to: String, title: String, body: String) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
-            { apiService.getNotif(to, title, body) },
+            { apiService.getNotify(to, title, body) },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-//                    val data = response.getJSONObject(ApiCode.DATA).toObject<User>(gson)
                     _getNotifSave.emit(ApiResponse().responseSuccess())
                 }
 

@@ -26,23 +26,23 @@ class HomeViewModel @Inject constructor(
     private val gson: Gson,
     private val session: Session
 
-) : BaseViewModel(){
+) : BaseViewModel() {
+    //TODO: untuk respon API
     private val _responseAPI = MutableSharedFlow<List<ListFriends>>()
     val responseAPI = _responseAPI.asSharedFlow()
 
+    //TODO: untuk respon save
     private val _responseSave = MutableSharedFlow<List<ListFriends>>()
     val responseSave = _responseSave.asSharedFlow()
 
 
-    fun getUser(
-    ) = viewModelScope.launch {
+    fun getUser() = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
             { apiService.getUserToken() },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-//                    val status = response.getInt(ApiCode.STATUS)
                     val data = response.getJSONObject(ApiCode.DATA).toObject<User>(gson)
                     session.saveUser(data)
                     _apiResponse.emit(ApiResponse().responseSuccess())
@@ -55,6 +55,7 @@ class HomeViewModel @Inject constructor(
             }
         )
     }
+
     fun getListFriend() = viewModelScope.launch {
         ApiObserver(
             { apiService.getListFriend() },

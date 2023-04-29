@@ -14,7 +14,6 @@ import com.maruchan.myclass.R
 import com.maruchan.myclass.base.BaseActivity
 import com.maruchan.myclass.data.constant.Const
 import com.maruchan.myclass.data.list.ListFriends
-import com.maruchan.myclass.data.room.user.User
 import com.maruchan.myclass.databinding.ActivityDetailFriendsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -37,7 +36,7 @@ class DetailFriendsActivity :
         friend = data
 
         //TODO: untuk tranformasi dari Sekolah_id ke nama sekolanya
-        data?.sekolah_id?.let { getlistSekolah(it.toInt()) }
+        data?.sekolah_id?.let { getListSchool(it.toInt()) }
 
     }
 
@@ -51,7 +50,7 @@ class DetailFriendsActivity :
         }
 
         binding.btnColek.setOnClickListener {
-            getNotif()
+            getNotify()
         }
 
         binding.btnLike.setOnClickListener {
@@ -92,12 +91,12 @@ class DetailFriendsActivity :
                             when (it.message) {
                                 "liked" -> {
                                     binding.detail = friend?.copy(like_by_you = true)
-                                    friend?.sekolah_id?.let { getlistSekolah(it.toInt()) }
+                                    friend?.sekolah_id?.let { getListSchool(it.toInt()) }
                                     loadingDialog.dismiss()
                                 }
                                 "unLiked" -> {
                                     binding.detail = friend?.copy(like_by_you = false)
-                                    friend?.sekolah_id?.let { getlistSekolah(it.toInt()) }
+                                    friend?.sekolah_id?.let { getListSchool(it.toInt()) }
                                     loadingDialog.dismiss()
                                 }
                             }
@@ -113,9 +112,9 @@ class DetailFriendsActivity :
         }
     }
 
-    private fun getNotif() {
+    private fun getNotify() {
         friend?.device_token?.let {
-            viewModel.getNotif(
+            viewModel.getNotify(
                 to = it,
                 title = "Anda telah dicolek",
                 body = "Hallo"
@@ -123,8 +122,8 @@ class DetailFriendsActivity :
         }
     }
 
-    private fun getlistSekolah(id: Int) {
-        viewModel.getListSekolah(id)
+    private fun getListSchool(id: Int) {
+        viewModel.getListSchool(id)
 
     }
 
@@ -132,10 +131,10 @@ class DetailFriendsActivity :
         val friendId = friend?.user_id
         if (friendId != null) {
             if (friend?.like_by_you == true) {
-                viewModel.unLike(friendId)
+                viewModel.unLiked(friendId)
                 setResult(Const.LIST.RELOAD)
             } else {
-                viewModel.like(friendId)
+                viewModel.liked(friendId)
                 setResult(Const.LIST.RELOAD)
             }
         }

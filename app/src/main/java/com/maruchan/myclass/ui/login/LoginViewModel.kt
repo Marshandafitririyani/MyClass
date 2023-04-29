@@ -27,20 +27,20 @@ class LoginViewModel @Inject constructor(
 
 ) : BaseViewModel() {
 
+    //TODO: untuk respon API
     private val _responseAPI = MutableSharedFlow<ApiResponse>()
     val responseAPI = _responseAPI.asSharedFlow()
 
     fun login(phone: String, password: String, deviceToken: String) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
-            { apiService.login(phone, password,deviceToken) },
+            { apiService.login(phone, password, deviceToken) },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-//                    val data = response.getJSONObject(ApiCode.DATA).toObject<User>(gson)
-                    val newToken = response.getString("access_token")
-                    session.setValue(Const.TOKEN.API_TOKEN, newToken)
-//                    session.saveUser(data)
+                    val token = response.getJSONObject("data").getJSONObject("token")
+                        .getString("access_token")
+                    session.setValue(Const.TOKEN.API_TOKEN, token)
                     _apiResponse.emit(ApiResponse().responseSuccess())
                 }
 
@@ -51,51 +51,4 @@ class LoginViewModel @Inject constructor(
             })
     }
 
-    /*//Login Function
-    fun loginn(
-        phone: String,
-        password: String,
-    ) = viewModelScope.launch {
-        _apiResponse.emit(ApiResponse().responseLoading())
-        ApiObserver({ apiService.login(phone, password) },
-            false, object : ApiObserver.ResponseListener {
-                override suspend fun onSuccess(response: JSONObject) {
-//                    val token = response.getString("token")
-//                    session.setValue(Cons.TOKEN.API_TOKEN,token)
-                    _apiResponse.emit(ApiResponse().responseSuccess())
-
-                }
-
-                override suspend fun onError(response: ApiResponse) {
-                    super.onError(response)
-                    _apiResponse.emit(ApiResponse().responseError())
-
-                }
-            })
-    }*/
-
-
-   /* fun getToken() {
-        viewModelScope.launch {
-            ApiObserver(
-                block = { apiService.getToken() },
-                toast = false,
-                responseListener = object : ApiObserver.ResponseListener {
-                    override suspend fun onSuccess(response: JSONObject) {
-
-                        //Timber untuk mengecek
-                        Timber.d("CekResponToken: $response")
-
-                        val token = response.getString("token")
-                        session.setValue(Const.TOKEN.API_TOKEN, token)
-                    }
-
-                    override suspend fun onError(response: ApiResponse) {
-                        super.onError(response)
-
-                    }
-                }
-            )
-        }
-    }*/
 }

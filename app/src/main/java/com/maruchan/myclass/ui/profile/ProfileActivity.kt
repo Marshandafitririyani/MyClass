@@ -29,9 +29,7 @@ import com.crocodic.core.extension.*
 import com.crocodic.core.helper.DateTimeHelper
 import com.maruchan.myclass.R
 import com.maruchan.myclass.base.BaseActivity
-import com.maruchan.myclass.data.list.ListSchool
 import com.maruchan.myclass.data.list.ListSchoolTwo
-import com.maruchan.myclass.data.room.user.User
 import com.maruchan.myclass.data.session.Session
 import com.maruchan.myclass.databinding.ActivityProfileBinding
 import com.maruchan.myclass.ui.splash.SplashActivity
@@ -48,13 +46,6 @@ import java.io.IOException
 import java.io.InputStream
 import javax.inject.Inject
 
-/*
-private val adapter by lazy {
-    ReactiveListAdapter<ItemFriendsBinding, User>(R.layout.item_friends)
-}
-*/
-
-
 @AndroidEntryPoint
 class ProfileActivity :
     BaseActivity<ActivityProfileBinding, ProfileViewModel>(R.layout.activity_profile) {
@@ -64,11 +55,8 @@ class ProfileActivity :
 
     private var username: String? = null
     private var school: Int? = null
-
-    private var filePhoto: File? = null
     private var photoFile: File? = null
-    private val listSchoolFilter= ArrayList<ListSchoolTwo?>()
-    private val listSchool = ArrayList<ListSchool>()
+    private val listSchoolFilter = ArrayList<ListSchoolTwo?>()
     private var schoolId: Int? = null
     private var schoolIdStatic: Int? = null
 
@@ -77,7 +65,7 @@ class ProfileActivity :
 
         observe()
         onClick()
-        getToken()
+        getUser()
         getListSchoolEdit()
 
         val user = session.getUser()
@@ -87,35 +75,9 @@ class ProfileActivity :
             schoolIdStatic = user.sekolah_id
 //            user.foto
             Log.d("cek foto", "foto:${user.foto}")
-            /*       school = user.user_id*/
+
         }
-
         getlistSekolah(user?.sekolah_id)
-
-
-        /*  ArrayAdapter(this, android.R.layout.simple_spinner_item, listSchool).also { adapter ->
-              adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-              binding.tvSchoolProfile.adapter = adapter
-          }
-
-          binding.tvSchoolProfile.onItemSelectedListener = object :
-              AdapterView.OnItemSelectedListener {
-              override fun onItemSelected(
-                  parent: AdapterView<*>?,
-                  view: View?,
-                  position: Int,
-                  id: Long
-              ) {
-  //                tos("Data: ${listSekolah[position]}")
-                  Toast.makeText(this@ProfileActivity, "Data: ${listSchool[position]}", Toast.LENGTH_SHORT).show()
-              }
-
-              override fun onNothingSelected(parent: AdapterView<*>?) {
-
-              }
-
-          }
-  */
     }
 
     private fun onClick() {
@@ -128,15 +90,19 @@ class ProfileActivity :
                 binding.user = session.getUser()
             }
         }
+
         binding.btnLogoutProfile.setOnClickListener {
             logout()
         }
+
         binding.btnEditPasswordProfile.setOnClickListener {
             editPasswprd()
         }
+
         binding.tvSchoolProfile.setOnClickListener {
             autocompleteSpinner()
         }
+
         binding.ivImageSaveEditProfil.setOnClickListener {
             validateForm()
         }
@@ -150,6 +116,7 @@ class ProfileActivity :
         }
     }
 
+    //TODO: untuk kompres foto
     suspend fun compressFile(filePhoto: File): File? {
         loadingDialog.show("Loading...")
         println("Compress 1")
@@ -171,33 +138,25 @@ class ProfileActivity :
     }
 
     private fun validateForm() {
-        val name =binding.tvNameProfile.textOf()
+        val name = binding.tvNameProfile.textOf()
         val schoolId = binding.tvSchoolProfile.textOf()
         val user = session.getUser()
-        /* session.saveUser(
-          User(
-              user_id = user?.user_id,
-              nama = user?.nama,
-              sekolah_id = user?.sekolah_id,
-              nomor_telepon = user?.nomor_telepon,
-              foto = user?.foto,
-              createdAt = user?.createdAt,
-              updatedAt = DateTimeHelper().dateNow()
-          )
-      )*/
-
-//        viewModel.editProfile(name = editTextName.textOf(), schoolId = user?.sekolah_id)
-
         if (photoFile == null) {
             if (name == username && schoolId == school.toString()) {
                 return
             }
-            viewModel.editProfile(name, schoolId =user?.sekolah_id)
+            viewModel.editProfile(name, schoolId = user?.sekolah_id)
         } else {
             lifecycleScope.launch {
                 val compressPhoto = compressFile(photoFile!!)
                 if (compressPhoto != null) {
-                    user?.nama?.let { viewModel.editWithPhoto(name= it, schoolId = user.sekolah_id, compressPhoto) }
+                    user?.nama?.let {
+                        viewModel.editWithPhoto(
+                            name = it,
+                            schoolId = user.sekolah_id,
+                            compressPhoto
+                        )
+                    }
                 }
             }
         }
@@ -207,7 +166,7 @@ class ProfileActivity :
     private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-
+                //TODO: untuk getUser
                 launch {
                     viewModel.responseAPI.collect {
                         when (it.status) {
@@ -220,11 +179,13 @@ class ProfileActivity :
 
                     }
                 }
+                //TODO: untuk getUser
                 launch {
                     viewModel.saveUserGetProfile.collect {
-                       binding.user = it
+                        binding.user = it
                     }
                 }
+                //TODO: untuk fungsi logout
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
@@ -246,6 +207,7 @@ class ProfileActivity :
 
 
                 }
+                //TODO: untuk fungsi save profile tanpa foto
                 launch {
                     viewModel.editProfile.collect {
                         when (it.status) {
@@ -258,6 +220,7 @@ class ProfileActivity :
                         }
                     }
                 }
+                //TODO: untuk transformasi dari sekolah_id menjadi sekolah_nama
                 launch {
                     viewModel.saveListSekolah.collect {
                         Log.d("filter school", "school:$it")
@@ -265,19 +228,18 @@ class ProfileActivity :
                     }
 
                 }
+                //  TODO: untuk fungsii edit sekolah
+                //        Panggil fungsi untuk spinner item dengan data yang diambil
                 launch {
                     viewModel.saveListSekolahPopup.collect { school ->
                         listSchoolFilter.addAll(school)
                         Log.d("cek sekolah", "listSchool:${school}")
-                        //  TODO: Panggil fungsi untuk spinner item dengan data yang diambil
+
                     }
                 }
+                //TODO: untuk fungsi save profile dengan foto
                 launch {
                     viewModel.editProfileWithPhoto.collect {
-                        /*when (it.status) {
-                            ApiStatus.SUCCESS -> {
-                                loadingDialog.dismiss()
-                                binding.user = session.getUser()*/
                         when (it.status) {
                             ApiStatus.LOADING -> loadingDialog.show("Save Profile With Photo")
                             ApiStatus.SUCCESS -> {
@@ -314,12 +276,12 @@ class ProfileActivity :
         val editConfirmPassword = customLayout.findViewById<EditText>(R.id.et_confirmasi_password)
         val textConfirmPassword = customLayout.findViewById<TextView>(R.id.tvPasswordNotMatch)
 
-
-        val textView = customLayout.findViewById<TextView>(R.id.btn_save_password)
-        textView.setOnClickListener {
+        val btnSave = customLayout.findViewById<TextView>(R.id.btn_save_password)
+        btnSave.setOnClickListener {
 
             if (editTexPassword.isEmptyRequired(R.string.label_must_fill) ||
-                editTextPasswordNw.isEmptyRequired(R.string.label_must_fill)
+                editTextPasswordNw.isEmptyRequired(R.string.label_must_fill) ||
+                editConfirmPassword.isEmptyRequired(R.string.label_must_fill)
             ) {
                 return@setOnClickListener
             }
@@ -328,6 +290,7 @@ class ProfileActivity :
             val newPassword = editTextPasswordNw.textOf()
             val confirmPassword = editConfirmPassword.textOf()
 
+            //TODO: untuk memastikan apakah password sama dengan confirmasi password
             if (newPassword != confirmPassword) {
                 textConfirmPassword.visibility = View.VISIBLE
             } else {
@@ -338,10 +301,7 @@ class ProfileActivity :
         }
         dialog.show()
     }
-    /*if (editTexPassword.textOf().isEmpty(R.string.label_must_fill)){
-                return@setOnClickListener
-                tos("Tidak boleh kosong")
-            }*/
+
 
     private fun logout() {
         val builder = AlertDialog.Builder(this)
@@ -363,8 +323,8 @@ class ProfileActivity :
         dialog.show()
     }
 
-    private fun getToken() {
-        viewModel.getToken()
+    private fun getUser() {
+        viewModel.getUser()
     }
 
 
@@ -374,6 +334,7 @@ class ProfileActivity :
         }
 
     }
+
     private fun getListSchoolEdit() {
         viewModel.getListSchoolEdit()
     }
@@ -397,23 +358,11 @@ class ProfileActivity :
         val btnSaveName = customLayout.findViewById<TextView>(R.id.btn_save)
         btnSaveName.setOnClickListener {
             val user = session.getUser()
-            /*            session.saveUser(
-                         User(
-                             user_id = user?.user_id,
-                             nama = editTextName.textOf(),
-                             sekolah_id = user?.sekolah_id,
-                             nomor_telepon = user?.nomor_telepon,
-                             foto = user?.foto,
-                             createdAt = user?.createdAt,
-                             updatedAt = DateTimeHelper().dateNow()
-                         )
-                     )*/
             viewModel.editProfile(name = editTextName.textOf(), schoolId = user?.sekolah_id)
 
             onDismiss.invoke()
             dialog.dismiss()
         }
-        // TODO: create and show the alert dialog
 
         dialog.show()
     }
@@ -500,6 +449,7 @@ class ProfileActivity :
 
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
             binding.imgProfile.setImageBitmap(bitmap)
+            //TODO: untuk mengganti centang pada icon pensil jika foto telah diganti
             binding.ivImageSaveEditProfil.setImageResource(R.drawable.ic_check)
             photoFile = file
         } catch (e: Exception) {
@@ -573,15 +523,17 @@ class ProfileActivity :
         return file
 
     }
+
     private fun autocompleteSpinner() {
         val autoCompleteSpinner = findViewById<AutoCompleteTextView>(R.id.tv_school_profile)
-        val options = arrayListOf("Pilih Sekolah") // untuk mengganti pilihan anda sendiri
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listSchoolFilter)
+        val adapter =
+            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listSchoolFilter)
         autoCompleteSpinner.setAdapter(adapter)
 
         // TODO:menampilkan dropdown saat itmenya diklik
         autoCompleteSpinner.setOnClickListener {
             autoCompleteSpinner.showDropDown()
+            //TODO: untuk mengganti icon pensil menjadi icon drop down saat memilih sekolah
             binding.imgDropDrown.setImageResource(R.drawable.ic_baseline_arrow_drop_down_24)
             autoCompleteSpinner.setDropDownVerticalOffset(-autoCompleteSpinner.height)
 
@@ -591,53 +543,17 @@ class ProfileActivity :
             // TODO:untuk selected itemenya
             val selectedItem = listSchoolFilter[position]
             schoolId = selectedItem?.sekolahId!!
+            //TODO: untuk mengganti incon drop down menjadi centang setelah  sekolah dipilih
             binding.imgDropDrown.setImageResource(R.drawable.ic_check_profile)
-            Toast.makeText(this@ProfileActivity, "Selected: $schoolId", Toast.LENGTH_SHORT).show()
         }
         val btnSave = findViewById<ImageView>(R.id.img_drop_drown)
         btnSave.setOnClickListener {
             val user = session.getUser()
             if (schoolId != schoolIdStatic) {
-                user?.nama?.let { nama -> viewModel.editProfile(name = nama, schoolId ) }
+                user?.nama?.let { nama ->
+                    viewModel.editProfile(name = nama, schoolId)
+                }
             }
-    }
-    }
-
-
-    private fun filterSchool() {
-        // TODO: Create an alert builder
-        val builder = AlertDialog.Builder(this)
-
-        // TODO: set the custom layout
-        val customLayout: View = layoutInflater.inflate(R.layout.popup_edit_school, null)
-        builder.setView(customLayout)
-        val dialog = builder.create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val autoCompleteSpinner = customLayout.findViewById<AutoCompleteTextView>(R.id.auto_complete_spinner_popup)
-        val options = arrayListOf("Pilih Sekolah") // untuk mengganti pilihan anda sendiri
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listSchool)
-        autoCompleteSpinner.setAdapter(adapter)
-
-        // TODO:menampilkan dropdown saat itmenya diklik
-        autoCompleteSpinner.setOnClickListener {
-            Log.d("listSchool","list:${listSchool}")
-//            autoCompleteSpinner.showDropDown()
-//            autoCompleteSpinner.dropDownVerticalOffset = -autoCompleteSpinner.height
         }
-
-        autoCompleteSpinner.setOnItemClickListener { parent, view, position, id ->
-            // TODO:untuk selected itemenya
-            val selectedItem = listSchool[position]
-            schoolId = selectedItem.sekolah_id!!
-            Toast.makeText(this@ProfileActivity, "Selected: $schoolId", Toast.LENGTH_SHORT).show()
-        }
-
-        val btnSave = customLayout.findViewById<TextView>(R.id.btn_save_edit_school)
-        btnSave.setOnClickListener {
-            tos("tes")
-        }
-        dialog.dismiss()
-        dialog.show()
     }
 }

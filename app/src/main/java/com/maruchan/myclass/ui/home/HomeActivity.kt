@@ -20,7 +20,6 @@ import com.maruchan.myclass.R
 import com.maruchan.myclass.base.BaseActivity
 import com.maruchan.myclass.data.constant.Const
 import com.maruchan.myclass.data.list.ListFriends
-import com.maruchan.myclass.data.list.ListSchool
 import com.maruchan.myclass.databinding.ActivityHomeBinding
 import com.maruchan.myclass.databinding.ItemFriendsBinding
 import com.maruchan.myclass.ui.detail.DetailFriendsActivity
@@ -31,10 +30,9 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.activity_home) {
 
-    private val tokenll = Const.TOKEN.API_TOKEN
+
     private val friends = ArrayList<ListFriends?>()
     private val friendsAll = ArrayList<ListFriends?>()
-    private val listSchool = ArrayList<ListSchool>()
 
     private val adapterFriends by lazy {
         ReactiveListAdapter<ItemFriendsBinding, ListFriends>(R.layout.item_friends).initItem { position, data ->
@@ -42,46 +40,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                 putExtra(Const.LIST.FRIENDS, data)
             }) {
                 if (it.resultCode == Const.LIST.RELOAD) { // TODO: cek result code apakah harus reload
-                   viewModel.getListFriend()
+                    viewModel.getListFriend()
                 }
             }
-
-
-           /* val detailIntent = Intent(this, DetailFriendsActivity::class.java).apply {
-                putExtra(Const.LIST.FRIENDS, data)
-            }
-            startActivity(detailIntent)*/
         }
     }
-
-    /*private val adapterFriends by lazy {
-        object : ReactiveListAdapter<ItemFriendsBinding, ListFriends>(R.layout.item_friends){
-            override fun onBindViewHolder(
-                holder: ItemViewHolder<ItemFriendsBinding, ListFriends>,
-                position: Int
-            ) {
-                val data = friends[position]
-                holder.binding.data = data
-                val school = friends.last { it?.sekolah_id == data?.sekolah_id }
-
-                holder.binding.tvSchoolItemFriends.text= school.toString()
-
-            }
-        }.initItem()
-    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        getlistSekolah()
-
         search()
-        getToken()
+        getUser()
         adapter()
         getListFriend()
         askNotificationPermission()
         observe()
+        initClick()
 
+        //TODO: get user
         val user = session.getUser()
         if (user != null) {
             binding.data = user
@@ -89,26 +65,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         }
 
 
+    }
 
-        /*getlistSekolah(user?.user_id)*/
-
+    private fun initClick() {
 
         binding.profileHome.setOnClickListener {
             activityLauncher.launch(createIntent<ProfileActivity>()) {
                 if (it.resultCode == 12345) {
-                    getToken()
+                    getUser()
                 }
             }
         }
-        /*      binding.ivMyClass.setOnClickListener {
-
-              }
-      */
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             getListFriend()
         }
-
     }
 
     private fun search() {
@@ -130,31 +101,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         }
     }
 
-    /* private fun search() {
-         binding.etSearchHome.doOnTextChanged { text, start, before, count ->
-             if (text.isNullOrEmpty()) {
-                 friends.clear()
-                 binding.recyclerViewHome.adapter?.notifyDataSetChanged()
-                 friends.addAll(friendsAll)
-                 binding.recyclerViewHome.adapter?.notifyItemInserted(0)
-             } else {
-                 val filter = friendsAll.filter { it?.nama?.contains("$text", true) == true }
-                 friends.clear()
-                 filter.forEach {
-                     friends.add(it)
-                 }
-                 binding.recyclerViewHome.adapter?.notifyDataSetChanged()
-                 binding.recyclerViewHome.adapter?.notifyItemInserted(0)
-             }
-            *//* if (friends.isEmpty()) {
-                binding.tvEmpty.visibility = View.VISIBLE
-            } else {
-                binding.tvEmpty.visibility = View.GONE
-            }*//*
-        }
-    }*/
-
-
     private fun adapter() {
         binding.recyclerViewHome.adapter = adapterFriends
     }
@@ -163,6 +109,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                //TODO: untuk get usernya
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
@@ -175,12 +122,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                     }
                 }
                 launch {
+                    //TODO: untuk fungsi swipeRefreshLayout dan search serta empty
                     viewModel.responseSave.collect { Friends ->
                         binding.swipeRefreshLayout.isRefreshing = false
                         Log.d("data produk", "cek ${Friends}")
                         friends.clear()
                         friendsAll.clear()
-//                        adapterFriends.submitList(friends)
                         friendsAll.addAll(Friends)
                         friends.addAll(Friends)
                         adapterFriends.submitList(friends)
@@ -193,26 +140,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
 
                     }
 
-
                 }
-                 /*launch {
-                     viewModel.responseAPI.collect {
-                         friends.clear()
-                         friends.addAll(it)
-                         adapterFriends.submitList(friendsAll)
-//                         binding.swipeRefreshLayout.isRefreshing = false
-
-
-                     }
-                 }*/
             }
         }
     }
-/*    private fun getUser(){
 
-    }*/
-
-    private fun getToken() {
+    private fun getUser() {
         viewModel.getUser()
     }
 
@@ -220,13 +153,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         viewModel.getListFriend()
     }
 
-    //todo:notofication
-    //untuk menunjukan ijin atau tidak dari askNotificationPermission
+    //TODO:notofication
+    //TODO:untuk menunjukan ijin atau tidak dari askNotificationPermission
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            // FCM SDK (and your app) can post notifications.
+            //TODO: FCM SDK (and your app) can post notifications.
             tos("Permission Granted")
             //todo:boleh
         } else {
@@ -236,26 +169,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         }
     }
 
-    //todo: menunjukan aksinya
+    //TODO: menunjukan aksinya
     private fun askNotificationPermission() {
-        // This is only necessary for API level >= 33 (TIRAMISU)
+        //TODO: this is only necessary for API level >= 33 (TIRAMISU)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
                 PackageManager.PERMISSION_GRANTED
             ) {
-                // FCM SDK (and your app) can post notifications.
+                //TODO: FCM SDK (and your app) can post notifications.
             } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                 // TODO: display an educational UI explaining to the user the features that will be enabled
                 //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
                 //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
                 //       If the user selects "No thanks," allow the user to continue without notifications.
             } else {
-                // Directly ask for the permission
+                // TODO: directly ask for the permission
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
     }
-/* private fun getlistSekolah() {
-         viewModel.getListSekolah()
-     }*/
 }

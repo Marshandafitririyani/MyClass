@@ -60,15 +60,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                 return@OnCompleteListener
             }
 
-            // Get new FCM registration token
-            //todo: menerima hasil tugas fcmnya
+            //TODO: Get new FCM registration token
+            //TODO: menerima hasil tugas fcmnya
             val token = task.result
 
-            // Log and toast
-            val msg = getString(R.string.msg_token_fmt, token) //todo:untuk menegecek aja
+            //TODO: Log and toast
+            val msg = getString(R.string.msg_token_fmt, token) //TODO:untuk menegecek aja
             Log.d(ContentValues.TAG, msg)
             session.setValue(Const.TOKEN.DEVICETOKEN, token)
-//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
 
 
@@ -89,7 +88,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         )
         binding.tvSignUp.text = spannableString
         binding.tvSignUp.movementMethod =
-            LinkMovementMethod.getInstance() // Required for clickable spans to work
+            LinkMovementMethod.getInstance() // TODO: required for clickable spans to work
     }
 
     private fun observe() {
@@ -105,22 +104,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                                 finish()
                             }
                             ApiStatus.ERROR -> {
-                                //disconnect(it)
-                                //loadingDialog.dismiss()
                                 loadingDialog.setResponse(it.message ?: return@collect)
                             }
                             else -> loadingDialog.setResponse(it.message ?: return@collect)
                         }
                     }
                 }
-
             }
-
         }
-
-
     }
-
-
-
 }

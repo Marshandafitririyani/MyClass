@@ -31,7 +31,7 @@ class ProfileViewModel @Inject constructor(
     private val gson: Gson,
     private val session: Session
 
-) : BaseViewModel(){
+) : BaseViewModel() {
     private val _user = kotlinx.coroutines.channels.Channel<List<User>>()
     val user = _user.receiveAsFlow()
     val getUser = session.getUser()
@@ -44,8 +44,7 @@ class ProfileViewModel @Inject constructor(
     private val _saveListSekolahPopup = MutableSharedFlow<List<ListSchoolTwo>>()
     val saveListSekolahPopup = _saveListSekolahPopup.asSharedFlow()
 
-
-//todo:untuk user
+    //todo:untuk user
     private val _responseAPI = MutableSharedFlow<ApiResponse>()
     val responseAPI = _responseAPI.asSharedFlow()
 
@@ -62,15 +61,13 @@ class ProfileViewModel @Inject constructor(
     val saveUserGetProfile = _saveUserGetProfile.asSharedFlow()
 
 
-
-    fun getToken(
+    fun getUser(
     ) = viewModelScope.launch {
         ApiObserver(
             { apiService.getUserToken() },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-//                    val status = response.getInt(ApiCode.STATUS)
                     val data = response.getJSONObject(ApiCode.DATA).toObject<User>(gson)
                     session.saveUser(data)
                     _saveUserGetProfile.emit(data)
@@ -79,19 +76,17 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
-    fun getListSekolah(id:Int) = viewModelScope.launch {
+    fun getListSekolah(id: Int) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
-            { apiService.getListSekolah() },
+            { apiService.getListSchool() },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
                     val data = response.getJSONArray("data").toList<ListSchool>(gson)
 
-//                    val school = data.filter { it.sekolah_id == id}
                     val school = data.last { it.sekolah_id == id }
-                   _saveListSchool.emit(school)
-//                    _saveListSekolahPopup.emit(data)
+                    _saveListSchool.emit(school)
                 }
 
                 override suspend fun onError(response: ApiResponse) {
@@ -100,8 +95,9 @@ class ProfileViewModel @Inject constructor(
             }
         )
     }
+
     fun getListSchoolEdit() = viewModelScope.launch {
-        ApiObserver({ apiService.getListSekolah() }, false, object : ApiObserver.ResponseListener {
+        ApiObserver({ apiService.getListSchool() }, false, object : ApiObserver.ResponseListener {
             override suspend fun onSuccess(response: JSONObject) {
                 val status = response.getInt(ApiCode.STATUS)
                 if (status == ApiCode.SUCCESS) {
@@ -165,6 +161,7 @@ class ProfileViewModel @Inject constructor(
                     session.clearAll()
                     _apiResponse.emit(ApiResponse().responseSuccess("Logout Success"))
                 }
+
                 override suspend fun onError(response: ApiResponse) {
                     super.onError(response)
                     _apiResponse.emit(ApiResponse().responseError())
@@ -172,14 +169,14 @@ class ProfileViewModel @Inject constructor(
             }
         )
     }
-    fun editPassword(current_password : String?, new_password: String?) = viewModelScope.launch {
-        ApiObserver({ apiService.editPassword(current_password,new_password) },
+
+    fun editPassword(current_password: String?, new_password: String?) = viewModelScope.launch {
+        ApiObserver({ apiService.editPassword(current_password, new_password) },
             false, object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-                   /* val data = response.getJSONObject(ApiCode.DATA).toObject<User>(gson)
-                    session.saveUser(data)*/
                     _editProfile.emit(ApiResponse().responseSuccess("Profile Updated"))
                 }
+
                 override suspend fun onError(response: ApiResponse) {
                     super.onError(response)
                     _apiResponse.emit(ApiResponse().responseError())
