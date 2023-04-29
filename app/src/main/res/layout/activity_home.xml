@@ -89,11 +89,13 @@
 
         <ImageView
             android:id="@+id/tv_empty"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_260sdp"
+            android:layout_width="@dimen/_220sdp"
+            android:layout_height="@dimen/_240sdp"
             android:layout_marginTop="@dimen/_140sdp"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_30sdp"
             android:gravity="center"
-            android:src="@drawable/img_empty_search"
+            android:src="@drawable/img_empty_green"
             android:textSize="@dimen/_30sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

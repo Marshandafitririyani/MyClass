@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 class DetailFriendsActivity :
     BaseActivity<ActivityDetailFriendsBinding, DetailFriendsViewModel>(R.layout.activity_detail_friends) {
     private var friend: ListFriends? = null
-    private var myUser: ListFriends? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +53,7 @@ class DetailFriendsActivity :
         }
 
         binding.btnLike.setOnClickListener {
-            getLike()
+            getLiked()
         }
 
         binding.btnChatWhatsapp.setOnClickListener {
@@ -114,11 +113,14 @@ class DetailFriendsActivity :
 
     private fun getNotify() {
         friend?.device_token?.let {
-            viewModel.getNotify(
-                to = it,
-                title = "Anda telah dicolek",
-                body = "Hallo"
-            )
+            val listFriends = session.getUser()
+            listFriends?.nama?.let { nameFriend ->
+                viewModel.getNotify(
+                    to = it,
+                    title = nameFriend,
+                    body = "Telah mencolek anda"
+                )
+            }
         }
     }
 
@@ -127,7 +129,7 @@ class DetailFriendsActivity :
 
     }
 
-    private fun getLike() {
+    private fun getLiked() {
         val friendId = friend?.user_id
         if (friendId != null) {
             if (friend?.like_by_you == true) {
