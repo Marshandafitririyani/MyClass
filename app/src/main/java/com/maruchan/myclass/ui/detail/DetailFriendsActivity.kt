@@ -85,7 +85,7 @@ class DetailFriendsActivity :
                 //TODO:untuk mengubah sekolah_id menjadi sekolah_nama
                 launch {
                     viewModel.saveListSekolah.collect {
-                        binding.tvSekolahDetail.text(it.sekolah)
+                        binding.tvSchoolDetail.text(it.sekolah)
                     }
 
 
