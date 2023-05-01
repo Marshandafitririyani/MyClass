@@ -52,7 +52,6 @@ class ProfileActivity :
 
     @Inject
     lateinit var CoreSession: Session
-
     private var username: String? = null
     private var school: Int? = null
     private var photoFile: File? = null
@@ -73,7 +72,6 @@ class ProfileActivity :
             binding.user = user
             schoolId = user.sekolah_id
             schoolIdStatic = user.sekolah_id
-//            user.foto
             Log.d("cek foto", "foto:${user.foto}")
 
         }

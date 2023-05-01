@@ -36,11 +36,11 @@ class ProfileViewModel @Inject constructor(
     val user = _user.receiveAsFlow()
     val getUser = session.getUser()
 
-    //todo: lis sekol
+    //todo: lis school
     private val _saveListSchool = MutableSharedFlow<ListSchool>()
     val saveListSekolah = _saveListSchool.asSharedFlow()
 
-    //todo:popup sekol
+    //todo:popup school
     private val _saveListSekolahPopup = MutableSharedFlow<List<ListSchoolTwo>>()
     val saveListSekolahPopup = _saveListSekolahPopup.asSharedFlow()
 
