@@ -50,22 +50,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             viewModel.login(phone, password, deviceToken)
         }
 
-        //TOdo:FirebaseMsgService
-        // todo:untuk jaga jaga
-        //todo:untuk mengambil device tokennya
-        //todo:untuk mendeteksi, diambil disini terus di set setValue,
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
-
-            //TODO: Get new FCM registration token
-            //TODO: menerima hasil tugas fcmnya
             val token = task.result
-
-            //TODO: Log and toast
-            val msg = getString(R.string.msg_token_fmt, token) //TODO:untuk menegecek aja
+            val msg = getString(R.string.msg_token_fmt, token)
             Log.d(ContentValues.TAG, msg)
             session.setValue(Const.TOKEN.DEVICETOKEN, token)
         })
@@ -88,7 +78,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         )
         binding.tvSignUp.text = spannableString
         binding.tvSignUp.movementMethod =
-            LinkMovementMethod.getInstance() // TODO: required for clickable spans to work
+            LinkMovementMethod.getInstance()
     }
 
     private fun observe() {

@@ -27,7 +27,6 @@ class LoginViewModel @Inject constructor(
 
 ) : BaseViewModel() {
 
-    //TODO: untuk respon API
     private val _responseAPI = MutableSharedFlow<ApiResponse>()
     val responseAPI = _responseAPI.asSharedFlow()
 

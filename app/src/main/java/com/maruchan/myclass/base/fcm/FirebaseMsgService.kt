@@ -27,20 +27,11 @@ class FirebaseMsgService : FirebaseMessagingService() {
 
         val context: Context = applicationContext
 
-        //TODO: untuk mengecek
-        Log.d("fcmServis", "messageData:${message.data}")
-        Log.d("fcmServis", "message:${message.notification}")
-        Timber.d("firebase_receive_message_title : ${message.data["user_id"]}")
-        Timber.d("firebase_receive_message_title : ${message.data["title"]}")
-        Timber.d("firebase_receive_message_message : ${message.data["body"]}")
-
-
         showNotification(
             context,
             message.data["title"] ?: return,
             message.data["body"] ?: return,
             message.data["user_id"] ?: return,
-            //TODO:title mengambil titlenya, body itu messagenya
         )
 
 
@@ -49,23 +40,17 @@ class FirebaseMsgService : FirebaseMessagingService() {
 }
 
 private fun sendRegistrationToServer(token: String?) {
-    // TODO: Implement this method to send token to your app server.
-    //TODO: untuk mengirim device tokennya, tapi home sudah ngambil dan mengirim...ini hanya untuk mengeceknya
     Log.d(TAG, "sendRegistrationTokenToServer($token)")
 }
 
-//TODO: untuk edit notifikasinya, notifasi manager sudah ada di android
+
 fun showNotification(context: Context, title: String, message: String, userId: String) {
-    //todo:Notification Manager
     val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    //TODO: Notification for Oreo
-    // untuk android 13 meminta notifikasi untuk notifikasi wajib untuk android 13 keatas
-    // untuk menyeting notifikasinya
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
         val channel = NotificationChannel(
-            "CHANNEL_ID", //TODO:untuk android 13
+            "CHANNEL_ID",
             "My Channel",
             NotificationManager.IMPORTANCE_DEFAULT
         )
@@ -75,16 +60,13 @@ fun showNotification(context: Context, title: String, message: String, userId: S
         notificationManager.createNotificationChannel(channel)
     }
 
-    //TODO: untuk berpindah ke activity detail saat membuka notifikasinya
     val resultIntent = Intent(context, DetailFriendsActivity::class.java).apply {
         putExtra(Const.ID, userId)
     }
-    //TODO: untuk berpindah ke activity detail saat membuka notifikasinya
+
     var resultPendingIntent: PendingIntent? =
         PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_IMMUTABLE)
 
-    //TODO: untuk edit titile, masage, logo
-    // TODO:Builder
     val builder = NotificationCompat.Builder(context, "CHANNEL_ID")
         .setSmallIcon(R.drawable.img_logo)
         .setContentTitle(title)
@@ -93,7 +75,6 @@ fun showNotification(context: Context, title: String, message: String, userId: S
         .setContentIntent(resultPendingIntent)
         .setAutoCancel(true)
 
-    // TODO:Show Notification
     notificationManager.notify(1, builder.build())
 }
 

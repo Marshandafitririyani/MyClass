@@ -36,10 +36,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
 
     private val adapterFriends by lazy {
         ReactiveListAdapter<ItemFriendsBinding, ListFriends>(R.layout.item_friends).initItem { position, data ->
-            activityLauncher.launch(createIntent<DetailFriendsActivity> { // TODO: pakai activitylauncher untuk memeriksa result code dari activity yang akan di open
+            activityLauncher.launch(createIntent<DetailFriendsActivity> {
                 putExtra(Const.LIST.FRIENDS, data)
             }) {
-                if (it.resultCode == Const.LIST.RELOAD) { // TODO: cek result code apakah harus reload
+                if (it.resultCode == Const.LIST.RELOAD) {
                     viewModel.getListFriend()
                 }
             }
@@ -57,7 +57,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         observe()
         initClick()
 
-        //TODO: getUser
         val user = session.getUser()
         if (user != null) {
             binding.data = user
@@ -108,7 +107,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                //TODO: untuk get usernya
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
@@ -121,10 +119,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                     }
                 }
                 launch {
-                    //TODO: untuk fungsi swipeRefreshLayout dan search serta empty
                     viewModel.responseSave.collect { Friends ->
                         binding.swipeRefreshLayout.isRefreshing = false
-                        Log.d("data produk", "cek ${Friends}")
                         friends.clear()
                         friendsAll.clear()
                         friendsAll.addAll(Friends)
@@ -152,39 +148,26 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         viewModel.getListFriend()
     }
 
-    //TODO:notofication
-    //TODO:untuk menunjukan ijin atau tidak dari askNotificationPermission
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            //TODO: FCM SDK (and your app) can post notifications.
             tos("Permission Granted")
-            //todo:boleh
         } else {
-            // TODO: Inform user that that your app will not show notifications.
             tos("Permission Denied")
-            //todo:tidak boleh
         }
     }
 
-    //TODO: menunjukan aksinya
     private fun askNotificationPermission() {
-        //TODO: this is only necessary for API level >= 33 (TIRAMISU)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
                 PackageManager.PERMISSION_GRANTED
             ) {
-                //TODO: FCM SDK (and your app) can post notifications.
-            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                // TODO: display an educational UI explaining to the user the features that will be enabled
-                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
-                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
-                //       If the user selects "No thanks," allow the user to continue without notifications.
-            } else {
-                // TODO: directly ask for the permission
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
+            } else
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                } else {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
         }
     }
 }

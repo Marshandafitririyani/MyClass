@@ -27,11 +27,9 @@ class HomeViewModel @Inject constructor(
     private val session: Session
 
 ) : BaseViewModel() {
-    //TODO: untuk respon API
     private val _responseAPI = MutableSharedFlow<List<ListFriends>>()
     val responseAPI = _responseAPI.asSharedFlow()
 
-    //TODO: untuk respon save
     private val _responseSave = MutableSharedFlow<List<ListFriends>>()
     val responseSave = _responseSave.asSharedFlow()
 

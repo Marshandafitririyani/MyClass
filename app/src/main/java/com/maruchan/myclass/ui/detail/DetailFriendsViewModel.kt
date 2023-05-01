@@ -28,15 +28,12 @@ class DetailFriendsViewModel @Inject constructor(
     private val session: Session
 
 ) : BaseViewModel() {
-    //TODO: untuk list sekolah
     private val _saveListSekolah = MutableSharedFlow<ListSchool>()
     val saveListSekolah = _saveListSekolah.asSharedFlow()
 
-    //TODO: untuk notifikasi
     private val _getNotifSave = MutableSharedFlow<ApiResponse>()
     val getNotifSave = _getNotifSave.asSharedFlow()
 
-    //TODO: untuk getProfile
     private val _getProfile = MutableSharedFlow<ListFriends>()
     val getProfile = _getProfile.asSharedFlow()
 

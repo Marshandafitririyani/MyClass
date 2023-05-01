@@ -72,10 +72,7 @@ class ProfileActivity :
             binding.user = user
             schoolId = user.sekolah_id
             schoolIdStatic = user.sekolah_id
-            Log.d("cek foto", "foto:${user.foto}")
-
         }
-        //TODO: untuk tranformasi dari Sekolah_id ke nama sekolanya
         getlistSekolah(user?.sekolah_id)
     }
 
@@ -115,12 +112,9 @@ class ProfileActivity :
         }
     }
 
-    //TODO: untuk kompres foto
     suspend fun compressFile(filePhoto: File): File? {
         loadingDialog.show("Loading...")
-        println("Compress 1")
         try {
-            println("Compress 2")
             return Compressor.compress(this, filePhoto) {
                 resolution(720, 720)
                 quality(80)
@@ -128,7 +122,6 @@ class ProfileActivity :
                 size(515)
             }
         } catch (e: Exception) {
-            println("Compress 3")
             binding.root.snacked("Gagal kompress anda bisa mengganti foto lain")
             e.printStackTrace()
             return null
@@ -165,7 +158,6 @@ class ProfileActivity :
     private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                //TODO: untuk getUser
                 launch {
                     viewModel.responseAPI.collect {
                         when (it.status) {
@@ -178,13 +170,11 @@ class ProfileActivity :
 
                     }
                 }
-                //TODO: untuk getUser
                 launch {
                     viewModel.saveUserGetProfile.collect {
                         binding.user = it
                     }
                 }
-                //TODO: untuk fungsi logout
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
@@ -206,7 +196,6 @@ class ProfileActivity :
 
 
                 }
-                //TODO: untuk fungsi save profile tanpa foto
                 launch {
                     viewModel.editProfile.collect {
                         when (it.status) {
@@ -219,24 +208,18 @@ class ProfileActivity :
                         }
                     }
                 }
-                //TODO: untuk transformasi dari sekolah_id menjadi sekolah_nama
                 launch {
                     viewModel.saveListSekolah.collect {
-                        Log.d("filter school", "school:$it")
                         binding.tvSchoolProfile.text(it.sekolah)
                     }
 
                 }
-                //  TODO: untuk fungsii edit sekolah
-                //        Panggil fungsi untuk spinner item dengan data yang diambil
                 launch {
                     viewModel.saveListSekolahPopup.collect { school ->
                         listSchoolFilter.addAll(school)
-                        Log.d("cek sekolah", "listSchool:${school}")
 
                     }
                 }
-                //TODO: untuk fungsi save profile dengan foto
                 launch {
                     viewModel.editProfileWithPhoto.collect {
                         when (it.status) {
@@ -289,7 +272,6 @@ class ProfileActivity :
             val newPassword = editTextPasswordNw.textOf()
             val confirmPassword = editConfirmPassword.textOf()
 
-            //TODO: untuk memastikan apakah password sama dengan confirmasi password
             if (newPassword != confirmPassword) {
                 textConfirmPassword.visibility = View.VISIBLE
             } else {
@@ -342,10 +324,7 @@ class ProfileActivity :
     private fun editName(
         onDismiss: () -> Unit
     ) {
-        // TODO: Create an alert builder
         val builder = AlertDialog.Builder(this)
-
-        // TODO: set the custom layout
         val customLayout: View = layoutInflater.inflate(R.layout.popup_edit_name, null)
         builder.setView(customLayout)
         val dialog = builder.create()
@@ -366,7 +345,6 @@ class ProfileActivity :
         dialog.show()
     }
 
-    //todo: untuk fungsi edit foto
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -448,7 +426,6 @@ class ProfileActivity :
 
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
             binding.imgProfile.setImageBitmap(bitmap)
-            //TODO: untuk mengganti centang pada icon pensil jika foto telah diganti
             binding.ivImageSaveEditProfil.setImageResource(R.drawable.ic_check)
             photoFile = file
         } catch (e: Exception) {
@@ -529,20 +506,16 @@ class ProfileActivity :
             ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listSchoolFilter)
         autoCompleteSpinner.setAdapter(adapter)
 
-        // TODO:menampilkan dropdown saat itmenya diklik
         autoCompleteSpinner.setOnClickListener {
             autoCompleteSpinner.showDropDown()
-            //TODO: untuk mengganti icon pensil menjadi icon drop down saat memilih sekolah
             binding.imgDropDrown.setImageResource(R.drawable.ic_baseline_arrow_drop_down_24)
             autoCompleteSpinner.setDropDownVerticalOffset(-autoCompleteSpinner.height)
 
         }
 
         autoCompleteSpinner.setOnItemClickListener { parent, view, position, id ->
-            // TODO:untuk selected itemenya
             val selectedItem = listSchoolFilter[position]
             schoolId = selectedItem?.sekolahId!!
-            //TODO: untuk mengganti incon drop down menjadi centang setelah  sekolah dipilih
             binding.imgDropDrown.setImageResource(R.drawable.ic_check_profile)
         }
         val btnSave = findViewById<ImageView>(R.id.img_drop_drown)

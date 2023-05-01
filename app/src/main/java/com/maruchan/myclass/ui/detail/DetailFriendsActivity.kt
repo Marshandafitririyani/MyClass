@@ -30,15 +30,12 @@ class DetailFriendsActivity :
         observe()
         initClick()
 
-        //TODO: untuk getParcelableExtra mengambil data dari FRIENDS
         val data = intent.getParcelableExtra<ListFriends>(Const.LIST.FRIENDS)
         binding.detail = data
         friend = data
 
-        //TODO: untuk tranformasi dari Sekolah_id ke nama sekolanya
         data?.sekolah_id?.let { getListSchool(it.toInt()) }
 
-        //TODO: untuk getParcelableExtra mengambil data dari ID
         val userId = intent.getStringExtra(Const.ID)
 
         userId?.let {
@@ -82,15 +79,13 @@ class DetailFriendsActivity :
     private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                //TODO:untuk mengubah sekolah_id menjadi sekolah_nama
                 launch {
                     viewModel.saveListSekolah.collect {
-                        binding.tvSekolahDetail.text(it.sekolah)
+                        binding.tvSchoolDetail.text(it.sekolah)
                     }
 
 
                 }
-                //TODO: untuk collect like dan unlikenya
                 launch {
                     viewModel.apiResponse.collect {
                         if (it.status == ApiStatus.LOADING) {
@@ -115,7 +110,6 @@ class DetailFriendsActivity :
                 }
 
             }
-            // TODO: collect dari api getprofile
             launch {
                 viewModel.getProfile.collect { getProfile ->
                     binding.detail = getProfile

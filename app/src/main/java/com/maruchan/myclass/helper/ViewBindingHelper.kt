@@ -14,7 +14,6 @@ class ViewBindingHelper {
 
             view.setImageDrawable(null)
 
-            //TODO: jika fotonya null maka akan menampilkan berikut
             if (imageUrl.isNullOrEmpty()) {
                 Glide
                     .with(view.context)
@@ -25,7 +24,6 @@ class ViewBindingHelper {
                     .into(view)
 
             } else {
-                //TODO:jika fotonya tidak null atau ada fotonya akan menampilkan foto yang ada pada user masing-masing
                 imageUrl.let {
                     Glide
                         .with(view.context)

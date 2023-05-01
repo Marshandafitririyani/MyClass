@@ -36,27 +36,21 @@ class ProfileViewModel @Inject constructor(
     val user = _user.receiveAsFlow()
     val getUser = session.getUser()
 
-    //todo: lis school
     private val _saveListSchool = MutableSharedFlow<ListSchool>()
     val saveListSekolah = _saveListSchool.asSharedFlow()
 
-    //todo:popup school
     private val _saveListSekolahPopup = MutableSharedFlow<List<ListSchoolTwo>>()
     val saveListSekolahPopup = _saveListSekolahPopup.asSharedFlow()
 
-    //todo:untuk user
     private val _responseAPI = MutableSharedFlow<ApiResponse>()
     val responseAPI = _responseAPI.asSharedFlow()
 
-    //todo: untuk update profile tanpa foto
     private val _editProfile = MutableSharedFlow<ApiResponse>()
     val editProfile = _editProfile.asSharedFlow()
 
-    //todo: untuk update profile dengan foto
     private val _editProfileWithPhoto = MutableSharedFlow<ApiResponse>()
     val editProfileWithPhoto = _editProfileWithPhoto.asSharedFlow()
 
-    //todo: untuk getUserProfile
     private val _saveUserGetProfile = MutableSharedFlow<User>()
     val saveUserGetProfile = _saveUserGetProfile.asSharedFlow()
 
