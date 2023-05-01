@@ -117,6 +117,7 @@
                     android:id="@+id/tv_name_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_20sdp"
                     android:autofillHints="text"
                     android:background="@color/transparent"
                     android:foreground="?selectableItemBackground"
@@ -126,7 +127,6 @@
                     android:text='@{user.nama}'
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
-                    android:layout_marginEnd="@dimen/_20sdp"
                     app:drawableEndCompat="@drawable/ic_edit_pen"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -194,31 +194,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <!--<TextView
-                    android:id="@+id/tv_school_profile"
-                    android:layout_width="@dimen/_240sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:autofillHints="text"
-                    android:background="@color/transparent"
-                    android:foreground="?selectableItemBackground"
-                    android:inputType="text"
-                    android:padding="@dimen/_5sdp"
-                    android:hint="Empty School"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.592"
-                    tools:ignore="RtlSymmetry,TextViewEdits"
-                    app:drawableEndCompat="@drawable/ic_edit_pen" />-->
-                
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="UselessParent">
 
                     <AutoCompleteTextView
                         android:id="@+id/tv_school_profile"
@@ -242,13 +224,14 @@
                         android:id="@+id/img_drop_drown"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:autofillHints="text"
-                        android:padding="@dimen/_5sdp"
-                        android:layout_marginEnd="@dimen/_20sdp"
-                        android:textColor="@color/black"
                         android:layout_gravity="end"
-                        android:textSize="@dimen/_15ssp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:autofillHints="text"
+                        android:contentDescription="@string/todo23"
+                        android:padding="@dimen/_5sdp"
                         android:src="@drawable/ic_edit_pen"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15ssp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

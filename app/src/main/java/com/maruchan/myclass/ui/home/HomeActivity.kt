@@ -57,7 +57,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         observe()
         initClick()
 
-        //TODO: get user
+        //TODO: getUser
         val user = session.getUser()
         if (user != null) {
             binding.data = user
@@ -68,7 +68,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     }
 
     private fun initClick() {
-
         binding.profileHome.setOnClickListener {
             activityLauncher.launch(createIntent<ProfileActivity>()) {
                 if (it.resultCode == 12345) {

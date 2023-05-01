@@ -1,13 +1,17 @@
 package com.maruchan.myclass.ui.detail
 
 import androidx.lifecycle.viewModelScope
+import com.crocodic.core.api.ApiCode
 import com.crocodic.core.api.ApiObserver
 import com.crocodic.core.api.ApiResponse
 import com.crocodic.core.extension.toList
+import com.crocodic.core.extension.toObject
 import com.google.gson.Gson
 import com.maruchan.myclass.api.ApiService
 import com.maruchan.myclass.base.BaseViewModel
+import com.maruchan.myclass.data.list.ListFriends
 import com.maruchan.myclass.data.list.ListSchool
+import com.maruchan.myclass.data.room.user.User
 import com.maruchan.myclass.data.session.Session
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,6 +35,11 @@ class DetailFriendsViewModel @Inject constructor(
     //TODO: untuk notifikasi
     private val _getNotifSave = MutableSharedFlow<ApiResponse>()
     val getNotifSave = _getNotifSave.asSharedFlow()
+
+    //TODO: untuk getProfile
+    private val _getProfile = MutableSharedFlow<ListFriends>()
+    val getProfile = _getProfile.asSharedFlow()
+
 
     fun getListSchool(id: Int) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
@@ -80,10 +89,10 @@ class DetailFriendsViewModel @Inject constructor(
 
     }
 
-    fun getNotify(to: String, title: String, body: String) = viewModelScope.launch {
+    fun getNotify(to: String, title: String, body: String, userId: String) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
-            { apiService.getNotify(to, title, body) },
+            { apiService.getNotify(to, title, body, userId) },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
@@ -91,5 +100,20 @@ class DetailFriendsViewModel @Inject constructor(
                 }
 
             })
+    }
+
+    fun getUserId(
+        id: Int
+    ) = viewModelScope.launch {
+        ApiObserver(
+            { apiService.getUserId(id) },
+            false,
+            object : ApiObserver.ResponseListener {
+                override suspend fun onSuccess(response: JSONObject) {
+                    val data = response.getJSONObject(ApiCode.DATA).toObject<ListFriends>(gson)
+                    _getProfile.emit(data)
+                }
+            }
+        )
     }
 }

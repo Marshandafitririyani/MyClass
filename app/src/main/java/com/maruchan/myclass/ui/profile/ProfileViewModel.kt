@@ -158,8 +158,8 @@ class ProfileViewModel @Inject constructor(
         ApiObserver({ apiService.logout() },
             false, object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-                    session.clearAll()
                     _apiResponse.emit(ApiResponse().responseSuccess("Logout Success"))
+                    session.clearAll()
                 }
 
                 override suspend fun onError(response: ApiResponse) {

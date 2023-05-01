@@ -68,12 +68,7 @@
     <string name="search">Search</string>
     <string name="password_didn_t_match">Password didn\'t match</string>
     <string name="add_school">Add School</string>
+    <string name="todo23">TODO</string>
 
-    <string-array name="filter_school">
-        <item>All</item>
-        <item>SMK Negeri 11 Semarang</item>
-        <item>SMK Negeri 3 Kendal</item>
-        <item>SMK Wikrama Jepara</item>
-    </string-array>
 
 </resources>

@@ -52,8 +52,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
         //TOdo:FirebaseMsgService
         // todo:untuk jaga jaga
-        //todo:untuk mengambil device toennya
-        //todo:untuk mendeteksi, diambil disisni terus di set setValue,
+        //todo:untuk mengambil device tokennya
+        //todo:untuk mendeteksi, diambil disini terus di set setValue,
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)

@@ -10,7 +10,6 @@
             type="com.maruchan.myclass.data.list.ListFriends" />
     </data>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +51,7 @@
                     android:padding="@dimen/_5sdp">
 
                     <TextView
-                        android:id="@+id/tv_name_item_friens"
+                        android:id="@+id/tv_name_item_friends"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"

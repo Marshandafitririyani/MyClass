@@ -10,4 +10,6 @@ object Const {
         const val FRIENDS = "friends"
         const val RELOAD = 876
     }
+
+    const val ID = "id"
 }

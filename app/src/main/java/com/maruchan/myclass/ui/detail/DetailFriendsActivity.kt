@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 class DetailFriendsActivity :
     BaseActivity<ActivityDetailFriendsBinding, DetailFriendsViewModel>(R.layout.activity_detail_friends) {
     private var friend: ListFriends? = null
+    private var usersId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,13 +30,20 @@ class DetailFriendsActivity :
         observe()
         initClick()
 
-        //TODO: untuk getParcelableExtra mengambil data
+        //TODO: untuk getParcelableExtra mengambil data dari FRIENDS
         val data = intent.getParcelableExtra<ListFriends>(Const.LIST.FRIENDS)
         binding.detail = data
         friend = data
 
         //TODO: untuk tranformasi dari Sekolah_id ke nama sekolanya
         data?.sekolah_id?.let { getListSchool(it.toInt()) }
+
+        //TODO: untuk getParcelableExtra mengambil data dari ID
+        val userId = intent.getStringExtra(Const.ID)
+
+        userId?.let {
+            usersId?.let { it1 -> viewModel.getUserId(it1) }
+        }
 
     }
 
@@ -106,7 +114,13 @@ class DetailFriendsActivity :
                     }
                 }
 
-
+            }
+            // TODO: collect dari api getprofile
+            launch {
+                viewModel.getProfile.collect { getProfile ->
+                    binding.detail = getProfile
+                    usersId = getProfile.user_id
+                }
             }
         }
     }
@@ -118,7 +132,8 @@ class DetailFriendsActivity :
                 viewModel.getNotify(
                     to = it,
                     title = nameFriend,
-                    body = "Telah mencolek anda"
+                    body = "Telah mencolek anda",
+                    userId = session.getUser()?.user_id.toString()
                 )
             }
         }

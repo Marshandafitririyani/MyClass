@@ -192,7 +192,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/tv_sekolah_detail"
+                    android:id="@+id/tv_school_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_30sdp"
                     android:autofillHints="text"

@@ -1,14 +1,9 @@
 package com.maruchan.myclass.ui.register
 
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -16,7 +11,6 @@ import com.crocodic.core.api.ApiStatus
 import com.crocodic.core.extension.*
 import com.maruchan.myclass.R
 import com.maruchan.myclass.base.BaseActivity
-import com.maruchan.myclass.data.list.ListSchool
 import com.maruchan.myclass.data.list.ListSchoolTwo
 import com.maruchan.myclass.databinding.ActivityRegisterBinding
 import com.maruchan.myclass.ui.login.LoginActivity
@@ -67,14 +61,22 @@ class RegisterActivity :
         ) {
             return
         }
-        if (password != confirmPassword) {
-            binding.tvPasswordNotMatch.visibility = View.VISIBLE
-        } else {
-            binding.tvPasswordNotMatch.visibility = View.GONE
-            viewModel.register(name, phone, schoolId, password)
-        }
 
+        //TODO: jika password kurang dari 6
+        if (password.length <= 5) {
+            binding.root.snacked("Password of at least 6 characters")
+
+        } else {
+            //TODO: jika password tidak sama dengan confirmPassword
+            if (password != confirmPassword) {
+                binding.tvPasswordNotMatch.visibility = View.VISIBLE
+            } else {
+                binding.tvPasswordNotMatch.visibility = View.GONE
+                viewModel.register(name, phone, schoolId, password)
+            }
+        }
     }
+
 
     private fun observe() {
         lifecycleScope.launch {
@@ -82,7 +84,7 @@ class RegisterActivity :
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
-                            ApiStatus.LOADING -> loadingDialog.show("Register....in")
+                            ApiStatus.LOADING -> loadingDialog.show("Register...in")
                             ApiStatus.SUCCESS -> {
                                 loadingDialog.dismiss()
                                 openActivity<LoginActivity>()
@@ -99,9 +101,10 @@ class RegisterActivity :
                     }
                 }
                 launch {
+                    //  TODO: Panggil fungsi untuk spinner item dengan data yang diambil
                     viewModel.saveListSekolah.collect { school ->
                         listSchool.addAll(school)
-                        //  TODO: Panggil fungsi untuk spinner item dengan data yang diambil
+
                     }
                 }
             }
@@ -109,7 +112,7 @@ class RegisterActivity :
     }
 
     private fun autocompleteSpinner() {
-        val autoCompleteSpinner = findViewById<AutoCompleteTextView>(R.id.autoCompleteSpinner)
+        val autoCompleteSpinner = findViewById<AutoCompleteTextView>(R.id.auto_complete_spinner)
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listSchool)
         autoCompleteSpinner.setAdapter(adapter)
 

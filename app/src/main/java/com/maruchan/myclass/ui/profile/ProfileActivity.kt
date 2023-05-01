@@ -75,6 +75,7 @@ class ProfileActivity :
             Log.d("cek foto", "foto:${user.foto}")
 
         }
+        //TODO: untuk tranformasi dari Sekolah_id ke nama sekolanya
         getlistSekolah(user?.sekolah_id)
     }
 
@@ -128,7 +129,7 @@ class ProfileActivity :
             }
         } catch (e: Exception) {
             println("Compress 3")
-            tos("Gagal kompress anda bisa mengganti foto lain")
+            binding.root.snacked("Gagal kompress anda bisa mengganti foto lain")
             e.printStackTrace()
             return null
         }
@@ -272,7 +273,7 @@ class ProfileActivity :
         val editTexPassword = customLayout.findViewById<EditText?>(R.id.et_password_old)
         val editTextPasswordNw = customLayout.findViewById<EditText>(R.id.et_password_new)
         val editConfirmPassword = customLayout.findViewById<EditText>(R.id.et_confirmasi_password)
-        val textConfirmPassword = customLayout.findViewById<TextView>(R.id.tvPasswordNotMatch)
+        val textConfirmPassword = customLayout.findViewById<TextView>(R.id.tv_password_not_match)
 
         val btnSave = customLayout.findViewById<TextView>(R.id.btn_save_password)
         btnSave.setOnClickListener {

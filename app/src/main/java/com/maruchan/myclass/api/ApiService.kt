@@ -9,7 +9,7 @@ interface ApiService {
     suspend fun login(
         @Field("nomor_telepon") phone: String?,
         @Field("password") password: String?,
-        @Field("device_token") device_token:String?
+        @Field("device_token") device_token: String?
     ): String
 
     @FormUrlEncoded
@@ -31,17 +31,18 @@ interface ApiService {
     @Multipart
     @POST("api/editprofile")
     suspend fun editProfileWithPhoto(
-        @Query("nama") name : String,
+        @Query("nama") name: String,
         @Query("sekolah_id") schoolId: Int?,
-        @Part foto : MultipartBody.Part?
-    ) : String
+        @Part foto: MultipartBody.Part?
+    ): String
 
     @FormUrlEncoded
     @POST("api/getnotif")
     suspend fun getNotify(
         @Field("to") to: String?,
         @Field("title") title: String?,
-        @Field("body") body: String?
+        @Field("body") body: String?,
+        @Field("user_id") user_id: String?
     ): String
 
     @FormUrlEncoded
@@ -51,8 +52,10 @@ interface ApiService {
         @Field("new_password") new_password: String?
     ): String
 
-    @POST("api/data_user")
-    suspend fun getUserToken(): String
+    @GET("api/user/{user_id}")
+    suspend fun getUserId(
+        @Path("user_id") user_id: Int?
+    ): String
 
     @POST("api/like/{id}")
     suspend fun liked(
@@ -64,6 +67,9 @@ interface ApiService {
         @Path("id") id: Int?
     ): String
 
+    @POST("api/data_user")
+    suspend fun getUserToken(): String
+
     @POST("api/logout")
     suspend fun logout(): String
 
@@ -72,5 +78,6 @@ interface ApiService {
 
     @GET("api/myfriend")
     suspend fun getListFriend(): String
+
 
 }

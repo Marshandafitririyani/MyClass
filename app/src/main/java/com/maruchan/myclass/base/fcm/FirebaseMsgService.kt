@@ -2,13 +2,17 @@ package com.maruchan.myclass.base.fcm
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.maruchan.myclass.R
+import com.maruchan.myclass.data.constant.Const
+import com.maruchan.myclass.ui.detail.DetailFriendsActivity
 import timber.log.Timber
 
 class FirebaseMsgService : FirebaseMessagingService() {
@@ -28,16 +32,17 @@ class FirebaseMsgService : FirebaseMessagingService() {
         Log.d("fcmServis", "message:${message.notification}")
         Timber.d("firebase_receive_message_title : ${message.data["user_id"]}")
         Timber.d("firebase_receive_message_title : ${message.data["title"]}")
-        Timber.d("firebase_receive_message_message : ${message.data["message"]}")
+        Timber.d("firebase_receive_message_message : ${message.data["body"]}")
 
-        if (message.notification != null) {
-            showNotification(
-                context,
-                message.notification!!.title!!,
-                message.notification!!.body!!
-                //TODO:title mengambil titlenya, body itu messagenya
-            )
-        }
+
+        showNotification(
+            context,
+            message.data["title"] ?: return,
+            message.data["body"] ?: return,
+            message.data["user_id"] ?: return,
+            //TODO:title mengambil titlenya, body itu messagenya
+        )
+
 
     }
 
@@ -50,7 +55,7 @@ private fun sendRegistrationToServer(token: String?) {
 }
 
 //TODO: untuk edit notifikasinya, notifasi manager sudah ada di android
-fun showNotification(context: Context, title: String, message: String) {
+fun showNotification(context: Context, title: String, message: String, userId: String) {
     //todo:Notification Manager
     val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -70,6 +75,14 @@ fun showNotification(context: Context, title: String, message: String) {
         notificationManager.createNotificationChannel(channel)
     }
 
+    //TODO: untuk berpindah ke activity detail saat membuka notifikasinya
+    val resultIntent = Intent(context, DetailFriendsActivity::class.java).apply {
+        putExtra(Const.ID, userId)
+    }
+    //TODO: untuk berpindah ke activity detail saat membuka notifikasinya
+    var resultPendingIntent: PendingIntent? =
+        PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_IMMUTABLE)
+
     //TODO: untuk edit titile, masage, logo
     // TODO:Builder
     val builder = NotificationCompat.Builder(context, "CHANNEL_ID")
@@ -77,6 +90,8 @@ fun showNotification(context: Context, title: String, message: String) {
         .setContentTitle(title)
         .setContentText(message)
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setContentIntent(resultPendingIntent)
+        .setAutoCancel(true)
 
     // TODO:Show Notification
     notificationManager.notify(1, builder.build())
