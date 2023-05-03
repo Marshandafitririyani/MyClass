@@ -3,13 +3,16 @@ package com.maruchan.myclass.ui.detail
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.crocodic.core.api.ApiStatus
 import com.crocodic.core.extension.text
+import com.crocodic.core.extension.toJson
 import com.crocodic.core.helper.ImagePreviewHelper
+import com.google.gson.Gson
 import com.maruchan.myclass.R
 import com.maruchan.myclass.base.BaseActivity
 import com.maruchan.myclass.data.constant.Const
@@ -30,23 +33,21 @@ class DetailFriendsActivity :
         observe()
         initClick()
 
-        val data = intent.getParcelableExtra<ListFriends>(Const.LIST.FRIENDS)
-        binding.detail = data
-        friend = data
+//        val data = intent.getParcelableExtra<ListFriends>(Const.LIST.FRIENDS)
+//        binding.detail = data
+//        friend = data
+//        usersId = data?.user_id
 
-        data?.sekolah_id?.let { getListSchool(it.toInt()) }
 
-        val userId = intent.getStringExtra(Const.ID)
+        usersId = intent.getIntExtra(Const.ID, 0)
+        viewModel.getUserId(usersId ?: return)
 
-        userId?.let {
-            usersId?.let { it1 -> viewModel.getUserId(it1) }
-        }
 
     }
 
     private fun initClick() {
         binding.imgProfileDetail.setOnClickListener {
-            ImagePreviewHelper(this).show(binding.imgProfileDetail, binding.detail?.foto)
+            ImagePreviewHelper(this).show(binding.imgProfileDetail, binding.user?.foto)
         }
 
         binding.ivBackDetail.setOnClickListener {
@@ -54,7 +55,7 @@ class DetailFriendsActivity :
         }
 
         binding.btnColek.setOnClickListener {
-            getNotify()
+            usersId?.let { it1 -> viewModel.getNotify(it1) }
         }
 
         binding.btnLike.setOnClickListener {
@@ -84,54 +85,53 @@ class DetailFriendsActivity :
                         binding.tvSchoolDetail.text(it.sekolah)
                     }
 
-
                 }
                 launch {
                     viewModel.apiResponse.collect {
                         if (it.status == ApiStatus.LOADING) {
                         } else if (it.status == ApiStatus.SUCCESS) {
-                            when (it.message) {
-                                "liked" -> {
-                                    binding.detail = friend?.copy(like_by_you = true)
-                                    friend?.sekolah_id?.let { getListSchool(it.toInt()) }
-                                    loadingDialog.dismiss()
-                                }
-                                "unLiked" -> {
-                                    binding.detail = friend?.copy(like_by_you = false)
-                                    friend?.sekolah_id?.let { getListSchool(it.toInt()) }
-                                    loadingDialog.dismiss()
-                                }
-                            }
+                            friend?.like_by_you = it.message == "liked"
+                            binding.user = friend
+                            Log.d("cek friends", "cek friends : $friend")
+                            friend?.sekolah_id?.let { getListSchool(it.toInt()) }
+
                         } else if (it.status == ApiStatus.ERROR) {
                             loadingDialog.setResponse(it.message ?: return@collect)
 
                         }
                     }
                 }
+                launch {
+                    viewModel.getProfile.collect { friends ->
+                        friend = friends
+                        binding.user = friend
+                        Log.d("cek data", "cek data : $friends")
+
+                        friend?.sekolah_id?.let { getListSchool(it.toInt()) }
+                    }
+                }
 
             }
-            launch {
-                viewModel.getProfile.collect { getProfile ->
-                    binding.detail = getProfile
-                    usersId = getProfile.user_id
-                }
-            }
+
         }
     }
 
     private fun getNotify() {
-        friend?.device_token?.let {
-            val listFriends = session.getUser()
-            listFriends?.nama?.let { nameFriend ->
-                viewModel.getNotify(
-                    to = it,
-                    title = nameFriend,
-                    body = "Telah mencolek anda",
-                    userId = session.getUser()?.user_id.toString()
-                )
-            }
-        }
     }
+
+    /* private fun getNotify() {
+         friend?.device_token?.let {
+             val listFriends = session.getUser()
+             listFriends?.nama?.let { nameFriend ->
+                 viewModel.getNotify(
+                     to = it,
+                     title = nameFriend,
+                     body = "Telah mencolek anda",
+                     userId = session.getUser()?.user_id.toString()
+                 )
+             }
+         }
+     }*/
 
     private fun getListSchool(id: Int) {
         viewModel.getListSchool(id)

@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="detail"
+            name="user"
             type="com.maruchan.myclass.data.list.ListFriends" />
 
         <import type="android.view.View" />
@@ -24,7 +24,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_200sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background='@{detail.like_by_you ? @drawable/ic_favorite : @drawable/ic_favorite_frame}'
+            android:background='@{user.like_by_you ? @drawable/ic_favorite : @drawable/ic_favorite_frame}'
             android:contentDescription="@string/todo"
             android:foreground="?selectableItemBackground"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_profile_detail"
-            imageUrl='@{detail.foto}'
+            imageUrl='@{user.foto}'
             android:layout_width="@dimen/_110sdp"
             android:layout_height="@dimen/_110sdp"
             android:layout_gravity="center"
@@ -124,7 +124,7 @@
                     android:hint="@string/empty_name"
                     android:inputType="text"
                     android:padding="@dimen/_5sdp"
-                    android:text='@{detail.nama}'
+                    android:text='@{user.nama}'
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -201,7 +201,7 @@
                     android:hint="@string/empty_school"
                     android:inputType="text"
                     android:padding="@dimen/_5sdp"
-                    android:text='@{detail.sekolah_id}'
+                    android:text='@{user.sekolah_id}'
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -279,7 +279,7 @@
                     android:hint="@string/empty_phone"
                     android:inputType="phone"
                     android:padding="@dimen/_5sdp"
-                    android:text='@{detail.nomor_telepon}'
+                    android:text='@{user.nomor_telepon}'
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"

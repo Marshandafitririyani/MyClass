@@ -37,7 +37,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     private val adapterFriends by lazy {
         ReactiveListAdapter<ItemFriendsBinding, ListFriends>(R.layout.item_friends).initItem { position, data ->
             activityLauncher.launch(createIntent<DetailFriendsActivity> {
-                putExtra(Const.LIST.FRIENDS, data)
+                putExtra(Const.ID, data.user_id)
             }) {
                 if (it.resultCode == Const.LIST.RELOAD) {
                     viewModel.getListFriend()

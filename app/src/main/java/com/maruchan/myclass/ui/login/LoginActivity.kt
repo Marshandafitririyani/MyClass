@@ -34,7 +34,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         observe()
 
         binding.tvSignUp.setOnClickListener {
-            tvRegister()
+            finish()
         }
 
         binding.btnLogin.setOnClickListener {
@@ -61,24 +61,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         })
 
 
-    }
-
-    private fun tvRegister() {
-        val spannableString = SpannableString("Don't have an accoun? Sign up")
-        val clickableSpan = object : ClickableSpan() {
-            override fun onClick(view: View) {
-                openActivity<RegisterActivity>()
-            }
-        }
-        spannableString.setSpan(
-            clickableSpan,
-            22,
-            spannableString.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        binding.tvSignUp.text = spannableString
-        binding.tvSignUp.movementMethod =
-            LinkMovementMethod.getInstance()
     }
 
     private fun observe() {

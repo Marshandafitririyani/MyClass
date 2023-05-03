@@ -34,8 +34,8 @@ class DetailFriendsViewModel @Inject constructor(
     private val _getNotifSave = MutableSharedFlow<ApiResponse>()
     val getNotifSave = _getNotifSave.asSharedFlow()
 
-    private val _getProfile = MutableSharedFlow<ListFriends>()
-    val getProfile = _getProfile.asSharedFlow()
+    private var _getProfile = MutableSharedFlow<ListFriends>()
+    var getProfile = _getProfile.asSharedFlow()
 
 
     fun getListSchool(id: Int) = viewModelScope.launch {
@@ -86,14 +86,14 @@ class DetailFriendsViewModel @Inject constructor(
 
     }
 
-    fun getNotify(to: String, title: String, body: String, userId: String) = viewModelScope.launch {
+    fun getNotify(userId: Int) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
-            { apiService.getNotify(to, title, body, userId) },
+            { apiService.getNotify(userId) },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-                    _getNotifSave.emit(ApiResponse().responseSuccess())
+                    _apiResponse.emit(ApiResponse().responseSuccess())
                 }
 
             })
@@ -106,10 +106,20 @@ class DetailFriendsViewModel @Inject constructor(
             { apiService.getUserId(id) },
             false,
             object : ApiObserver.ResponseListener {
+
                 override suspend fun onSuccess(response: JSONObject) {
                     val data = response.getJSONObject(ApiCode.DATA).toObject<ListFriends>(gson)
                     _getProfile.emit(data)
+                    _apiResponse.emit(ApiResponse().responseSuccess())
+
                 }
+
+                override suspend fun onError(response: ApiResponse) {
+                    super.onError(response)
+                    _apiResponse.emit(ApiResponse().responseError())
+
+                }
+
             }
         )
     }

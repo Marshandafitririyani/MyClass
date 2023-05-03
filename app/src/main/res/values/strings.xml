@@ -21,7 +21,7 @@
     <string name="password">Password</string>
     <string name="add_password">Add Password</string>
     <string name="login2">Login</string>
-    <string name="don_t_have_an_accoun_sign_up">Don\'t have an accoun? Sign up</string>
+    <string name="don_t_have_an_accoun_sign_up">Don\'t have an account? Sign up</string>
     <string name="todo10">TODO</string>
     <string name="todo11">TODO</string>
     <string name="todo12">TODO</string>
@@ -43,7 +43,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="add_confirm_password">Confirm Password</string>
     <string name="register2">Register</string>
-    <string name="have_an_accoun_log_in">Have an account? Log in</string>
+    <string name="have_an_accoun_log_in">Have an account?</string>
     <string name="todo15">TODO</string>
     <string name="todo16">TODO</string>
     <string name="marshanda_fitri_riyani">Marshanda Fitri Riyani</string>

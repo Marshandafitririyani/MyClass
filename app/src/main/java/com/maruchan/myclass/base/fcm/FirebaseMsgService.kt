@@ -27,12 +27,31 @@ class FirebaseMsgService : FirebaseMessagingService() {
 
         val context: Context = applicationContext
 
+        Log.d("fcmServis", "messageData:${message.data}")
+        Log.d("fcmServis", "message:${message.notification}")
+
+        /*if (message.notification!=null){
+            showNotification(
+                context,
+                message.notification!!.title!!,
+                message.notification!!.body!!,
+
+
+
+            )
+        }
+
+    }
+
+}*/
+
         showNotification(
             context,
             message.data["title"] ?: return,
             message.data["body"] ?: return,
             message.data["user_id"] ?: return,
-        )
+
+            )
 
 
     }
@@ -44,7 +63,7 @@ private fun sendRegistrationToServer(token: String?) {
 }
 
 
-fun showNotification(context: Context, title: String, message: String, userId: String) {
+fun showNotification(context: Context, title: String, message: String, user_id: String) {
     val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -61,8 +80,9 @@ fun showNotification(context: Context, title: String, message: String, userId: S
     }
 
     val resultIntent = Intent(context, DetailFriendsActivity::class.java).apply {
-        putExtra(Const.ID, userId)
+        putExtra(Const.ID, user_id.toInt())
     }
+
 
     var resultPendingIntent: PendingIntent? =
         PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_IMMUTABLE)

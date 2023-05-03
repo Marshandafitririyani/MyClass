@@ -7,9 +7,9 @@ object Const {
     }
 
     object LIST {
-        const val FRIENDS = "friends"
+        const val FRIENDS = "user_id"
         const val RELOAD = 876
     }
 
-    const val ID = "id"
+    const val ID = "user_id"
 }
