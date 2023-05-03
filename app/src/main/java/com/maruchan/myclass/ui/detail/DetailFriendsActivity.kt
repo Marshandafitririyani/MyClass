@@ -3,6 +3,7 @@ package com.maruchan.myclass.ui.detail
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -57,7 +58,9 @@ class DetailFriendsActivity :
         }
 
         binding.btnColek.setOnClickListener {
-            getNotify()
+            usersId?.let { it1 -> viewModel.getNotify(it1) }
+
+//            getNotifyy()
         }
 
         binding.btnLike.setOnClickListener {
@@ -117,15 +120,21 @@ class DetailFriendsActivity :
             }
             // TODO: collect dari api getprofile
             launch {
-                viewModel.getProfile.collect { getProfile ->
+                viewModel.getProfile.collect { friends ->
+                    friend = friends
+                    binding.detail = friend
+                    Log.d("cek data", "cek data : $friends")
+                    friend?.sekolah_id?.let { getListSchool(it.toInt()) }
+                }
+               /* viewModel.getProfile.collect { getProfile ->
                     binding.detail = getProfile
                     usersId = getProfile.user_id
-                }
+                }*/
             }
         }
     }
 
-    private fun getNotify() {
+   /* private fun getNotify() {
         friend?.device_token?.let {
             val listFriends = session.getUser()
             listFriends?.nama?.let { nameFriend ->
@@ -137,7 +146,7 @@ class DetailFriendsActivity :
                 )
             }
         }
-    }
+    }*/
 
     private fun getListSchool(id: Int) {
         viewModel.getListSchool(id)

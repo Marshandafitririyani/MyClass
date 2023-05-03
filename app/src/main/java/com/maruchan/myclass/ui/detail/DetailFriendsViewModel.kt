@@ -89,7 +89,7 @@ class DetailFriendsViewModel @Inject constructor(
 
     }
 
-    fun getNotify(to: String, title: String, body: String, userId: String) = viewModelScope.launch {
+   /* fun getNotify(to: String, title: String, body: String, userId: String) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
             { apiService.getNotify(to, title, body, userId) },
@@ -100,7 +100,21 @@ class DetailFriendsViewModel @Inject constructor(
                 }
 
             })
+    }*/
+
+    fun getNotify(userId: Int) = viewModelScope.launch {
+        _apiResponse.emit(ApiResponse().responseLoading())
+        ApiObserver(
+            { apiService.getNotify(userId) },
+            false,
+            object : ApiObserver.ResponseListener {
+                override suspend fun onSuccess(response: JSONObject) {
+                    _apiResponse.emit(ApiResponse().responseSuccess())
+                }
+
+            })
     }
+
 
     fun getUserId(
         id: Int

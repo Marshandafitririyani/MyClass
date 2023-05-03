@@ -36,14 +36,11 @@ interface ApiService {
         @Part foto: MultipartBody.Part?
     ): String
 
-    @FormUrlEncoded
-    @POST("api/getnotif")
+    @POST("api/getnotif/{user_id}")
     suspend fun getNotify(
-        @Field("to") to: String?,
-        @Field("title") title: String?,
-        @Field("body") body: String?,
-        @Field("user_id") user_id: String?
+        @Path("user_id") userId: Int?
     ): String
+
 
     @FormUrlEncoded
     @POST("api/editpassword")

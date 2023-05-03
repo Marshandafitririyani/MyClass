@@ -38,8 +38,8 @@ class FirebaseMsgService : FirebaseMessagingService() {
         showNotification(
             context,
             message.data["title"] ?: return,
-            message.data["body"] ?: return,
-            message.data["user_id"] ?: return,
+            message.data["body"] ?: return
+
             //TODO:title mengambil titlenya, body itu messagenya
         )
 
@@ -55,7 +55,7 @@ private fun sendRegistrationToServer(token: String?) {
 }
 
 //TODO: untuk edit notifikasinya, notifasi manager sudah ada di android
-fun showNotification(context: Context, title: String, message: String, userId: String) {
+fun showNotification(context: Context, title: String, message: String) {
     //todo:Notification Manager
     val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -76,9 +76,8 @@ fun showNotification(context: Context, title: String, message: String, userId: S
     }
 
     //TODO: untuk berpindah ke activity detail saat membuka notifikasinya
-    val resultIntent = Intent(context, DetailFriendsActivity::class.java).apply {
-        putExtra(Const.ID, userId)
-    }
+    val resultIntent = Intent(context, DetailFriendsActivity::class.java)
+
     //TODO: untuk berpindah ke activity detail saat membuka notifikasinya
     var resultPendingIntent: PendingIntent? =
         PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_IMMUTABLE)
