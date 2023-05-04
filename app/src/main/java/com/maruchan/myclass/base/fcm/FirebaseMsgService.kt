@@ -34,21 +34,6 @@ class FirebaseMsgService : FirebaseMessagingService() {
         Log.d("fcmServis", "messageData:${message.data["title"]}")
         Log.d("fcmServis", "message:${message.notification}")
 
-        /*if (message.notification!=null){
-            showNotification(
-                context,
-                message.notification!!.title!!,
-                message.notification!!.body!!,
-
-
-
-            )
-        }
-
-    }
-
-}*/
-
         showNotification(
             context,
             message.data["title"] ?: return,
