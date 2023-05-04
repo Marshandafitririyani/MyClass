@@ -36,15 +36,6 @@ interface ApiService {
         @Part foto: MultipartBody.Part?
     ): String
 
-
-   /* @POST("api/getnotif/{id}")
-    suspend fun getNotify(
-        @Field("to") to: String?,
-        @Field("title") title: String?,
-        @Field("body") body: String?,
-        @Field("user_id") user_id: String?
-    ): String*/
-
     @POST("api/getnotif/{user_id}")
     suspend fun getNotify(
         @Path("user_id") userId: Int?

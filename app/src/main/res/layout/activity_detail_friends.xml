@@ -9,7 +9,6 @@
             name="user"
             type="com.maruchan.myclass.data.list.ListFriends" />
 
-        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -201,7 +200,6 @@
                     android:hint="@string/empty_school"
                     android:inputType="text"
                     android:padding="@dimen/_5sdp"
-                    android:text='@{user.sekolah_id}'
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"

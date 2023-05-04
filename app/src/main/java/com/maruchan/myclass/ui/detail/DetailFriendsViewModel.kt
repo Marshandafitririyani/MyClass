@@ -11,7 +11,6 @@ import com.maruchan.myclass.api.ApiService
 import com.maruchan.myclass.base.BaseViewModel
 import com.maruchan.myclass.data.list.ListFriends
 import com.maruchan.myclass.data.list.ListSchool
-import com.maruchan.myclass.data.room.user.User
 import com.maruchan.myclass.data.session.Session
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -87,13 +86,11 @@ class DetailFriendsViewModel @Inject constructor(
     }
 
     fun getNotify(userId: Int) = viewModelScope.launch {
-        _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
             { apiService.getNotify(userId) },
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-                    _apiResponse.emit(ApiResponse().responseSuccess())
                 }
 
             })
@@ -110,14 +107,10 @@ class DetailFriendsViewModel @Inject constructor(
                 override suspend fun onSuccess(response: JSONObject) {
                     val data = response.getJSONObject(ApiCode.DATA).toObject<ListFriends>(gson)
                     _getProfile.emit(data)
-                    _apiResponse.emit(ApiResponse().responseSuccess())
-
                 }
 
                 override suspend fun onError(response: ApiResponse) {
                     super.onError(response)
-                    _apiResponse.emit(ApiResponse().responseError())
-
                 }
 
             }

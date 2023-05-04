@@ -7,7 +7,6 @@ object Const {
     }
 
     object LIST {
-        const val FRIENDS = "user_id"
         const val RELOAD = 876
     }
 

@@ -2,12 +2,7 @@ package com.maruchan.myclass.ui.login
 
 import android.content.ContentValues
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,7 +17,6 @@ import com.maruchan.myclass.base.BaseActivity
 import com.maruchan.myclass.data.constant.Const
 import com.maruchan.myclass.databinding.ActivityLoginBinding
 import com.maruchan.myclass.ui.home.HomeActivity
-import com.maruchan.myclass.ui.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

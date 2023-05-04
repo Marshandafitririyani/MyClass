@@ -3,16 +3,20 @@ package com.maruchan.myclass.base.fcm
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.crocodic.core.helper.DateTimeHelper
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.maruchan.myclass.R
 import com.maruchan.myclass.data.constant.Const
 import com.maruchan.myclass.ui.detail.DetailFriendsActivity
+import com.maruchan.myclass.ui.home.HomeActivity
 import timber.log.Timber
 
 class FirebaseMsgService : FirebaseMessagingService() {
@@ -27,7 +31,7 @@ class FirebaseMsgService : FirebaseMessagingService() {
 
         val context: Context = applicationContext
 
-        Log.d("fcmServis", "messageData:${message.data}")
+        Log.d("fcmServis", "messageData:${message.data["title"]}")
         Log.d("fcmServis", "message:${message.notification}")
 
         /*if (message.notification!=null){
@@ -52,7 +56,6 @@ class FirebaseMsgService : FirebaseMessagingService() {
             message.data["user_id"] ?: return,
 
             )
-
 
     }
 
@@ -79,13 +82,27 @@ fun showNotification(context: Context, title: String, message: String, user_id: 
         notificationManager.createNotificationChannel(channel)
     }
 
-    val resultIntent = Intent(context, DetailFriendsActivity::class.java).apply {
+    val homeIntent = Intent(context, HomeActivity::class.java)
+
+
+    val detailIntent = Intent(context, DetailFriendsActivity::class.java).apply {
+        Log.d("cek id", "cek id : $user_id")
         putExtra(Const.ID, user_id.toInt())
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }
 
 
     var resultPendingIntent: PendingIntent? =
-        PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_IMMUTABLE)
+        PendingIntent.getActivity(
+            context, 1, detailIntent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+    val stackBuilder = TaskStackBuilder.create(context)
+    stackBuilder.addNextIntent(homeIntent)
+    stackBuilder.addNextIntent(detailIntent)
+    resultPendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_CANCEL_CURRENT)
+
 
     val builder = NotificationCompat.Builder(context, "CHANNEL_ID")
         .setSmallIcon(R.drawable.img_logo)
@@ -95,6 +112,7 @@ fun showNotification(context: Context, title: String, message: String, user_id: 
         .setContentIntent(resultPendingIntent)
         .setAutoCancel(true)
 
-    notificationManager.notify(1, builder.build())
+    val idNotification = DateTimeHelper().createAtLong().toInt()
+    notificationManager.notify(idNotification, builder.build())
 }
 
