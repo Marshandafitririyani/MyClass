@@ -205,26 +205,26 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_have_an_accoun"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center"
-            android:text="@string/have_an_accoun_log_in"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp" />
+            <TextView
+                android:id="@+id/tv_have_an_accoun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:text="@string/have_an_accoun_log_in"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp" />
 
             <TextView
                 android:id="@+id/tv_log_in_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:foreground="?selectableItemBackground"
-                android:text="Log In"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:textColor="@color/blue_20"
+                android:text="@string/log_in"
+                android:textColor="@color/teal_200"
                 android:textSize="@dimen/_13ssp" />
         </LinearLayout>
 

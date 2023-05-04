@@ -63,8 +63,9 @@ class RegisterActivity :
         }
         if (password.length <= 5) {
             binding.root.snacked("Password of at least 6 characters")
+        }
 
-        } else {
+            else {
             if (password != confirmPassword) {
                 binding.tvPasswordNotMatch.visibility = View.VISIBLE
             } else {

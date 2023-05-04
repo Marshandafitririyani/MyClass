@@ -2,7 +2,12 @@ package com.maruchan.myclass.ui.login
 
 import android.content.ContentValues
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -17,6 +22,7 @@ import com.maruchan.myclass.base.BaseActivity
 import com.maruchan.myclass.data.constant.Const
 import com.maruchan.myclass.databinding.ActivityLoginBinding
 import com.maruchan.myclass.ui.home.HomeActivity
+import com.maruchan.myclass.ui.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,8 +33,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
         observe()
 
-        binding.tvSignUp.setOnClickListener {
-            finish()
+
+        binding.tvSignUpAccount.setOnClickListener {
+            tvRegister()
+//            RegisterActivity()
+        }
+        binding.login.setOnClickListener {
+            RegisterActivity()
         }
 
         binding.btnLogin.setOnClickListener {
@@ -55,6 +66,23 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         })
 
 
+    }
+    private fun tvRegister() {
+        val spannableString = SpannableString("Don't have an accoun? Sign up")
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(view: View) {
+                openActivity<RegisterActivity>()
+            }
+        }
+        spannableString.setSpan(
+            clickableSpan,
+            22,
+            spannableString.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.tvSignUpAccount.text = spannableString
+        binding.tvSignUpAccount.movementMethod =
+            LinkMovementMethod.getInstance() // TODO: required for clickable spans to work
     }
 
     private fun observe() {

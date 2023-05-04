@@ -31,6 +31,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_60sdp"
@@ -132,20 +133,7 @@
                 android:textColor="@color/green"
                 android:textSize="@dimen/_13ssp" />
 
-            <TextView
-                android:id="@+id/tv_sign_up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:gravity="center"
-                android:text="Sign up"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:textColor="@color/green"
-                android:textSize="@dimen/_13ssp" />
-
         </LinearLayout>
-
-
         </LinearLayout>
     </RelativeLayout>
 </layout>

@@ -69,6 +69,7 @@
     <string name="password_didn_t_match">Password didn\'t match</string>
     <string name="add_school">Add School</string>
     <string name="todo23">TODO</string>
+    <string name="log_in">Log In</string>
 
 
 </resources>
