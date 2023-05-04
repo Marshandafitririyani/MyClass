@@ -61,11 +61,12 @@ class RegisterActivity :
         ) {
             return
         }
+        //TODO: jika password kurang dari 6
         if (password.length <= 5) {
             binding.root.snacked("Password of at least 6 characters")
         }
-
             else {
+            //TODO: jika password tidak sama dengan confirmPassword
             if (password != confirmPassword) {
                 binding.tvPasswordNotMatch.visibility = View.VISIBLE
             } else {
@@ -98,6 +99,7 @@ class RegisterActivity :
                         }
                     }
                 }
+                //  TODO: Panggil fungsi untuk spinner item dengan data yang diambil
                 launch {
                     viewModel.saveListSekolah.collect { school ->
                         listSchool.addAll(school)
@@ -113,11 +115,13 @@ class RegisterActivity :
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listSchool)
         autoCompleteSpinner.setAdapter(adapter)
 
+        // TODO:menampilkan dropdown saat itmenya diklik
         autoCompleteSpinner.setOnClickListener {
             autoCompleteSpinner.showDropDown()
             autoCompleteSpinner.setDropDownVerticalOffset(-autoCompleteSpinner.height)
         }
         autoCompleteSpinner.setOnItemClickListener { parent, view, position, id ->
+            // TODO:untuk selected itemenya
             val selectedItem = listSchool[position]
             schoolId = selectedItem?.sekolahId!!
 

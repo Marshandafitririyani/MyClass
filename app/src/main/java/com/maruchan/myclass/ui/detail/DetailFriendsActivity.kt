@@ -30,6 +30,7 @@ class DetailFriendsActivity :
         observe()
         initClick()
 
+        //TODO: untuk menerima data dari FRIENDS
         usersId = intent.getIntExtra(Const.ID, 0)
         viewModel.getUserId(usersId ?: return)
 
@@ -69,11 +70,13 @@ class DetailFriendsActivity :
     private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                //TODO:untuk mengubah sekolah_id menjadi sekolah_nama
                 launch {
                     viewModel.saveListSekolah.collect {
                         binding.tvSchoolDetail.text(it.sekolah)
                     }
                 }
+                //TODO: untuk collect like dan unlikenya
                 launch {
                     viewModel.apiResponse.collect {
                         if (it.status == ApiStatus.SUCCESS) {
@@ -84,6 +87,7 @@ class DetailFriendsActivity :
                         }
                     }
                 }
+                // TODO: collect dari api getprofile
                 launch {
                     viewModel.getProfile.collect { friends ->
                         friend = friends

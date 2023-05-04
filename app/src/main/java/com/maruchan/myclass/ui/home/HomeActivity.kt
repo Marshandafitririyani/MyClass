@@ -33,11 +33,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     private val friends = ArrayList<ListFriends?>()
     private val friendsAll = ArrayList<ListFriends?>()
 
+    //TODO: untuk mengirim data (adapternya)
     private val adapterFriends by lazy {
         ReactiveListAdapter<ItemFriendsBinding, ListFriends>(R.layout.item_friends).initItem { position, data ->
             activityLauncher.launch(createIntent<DetailFriendsActivity> {
                 putExtra(Const.ID, data.user_id)
             }) {
+                //TODO: untuk mereload list friend pada list home
                 if (it.resultCode == Const.LIST.RELOAD) {
                     viewModel.getListFriend()
                 }
@@ -67,6 +69,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
 
     private fun initClick() {
         binding.profileHome.setOnClickListener {
+            //TODO; untuk reload profile di icon home
             activityLauncher.launch(createIntent<ProfileActivity>()) {
                 if (it.resultCode == 12345) {
                     getUser()
@@ -106,6 +109,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                //TODO: untuk get usernya
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
@@ -117,6 +121,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                         }
                     }
                 }
+                //TODO: untuk fungsi swipeRefreshLayout dan search serta empty
                 launch {
                     viewModel.responseSave.collect { Friends ->
                         binding.swipeRefreshLayout.isRefreshing = false
@@ -126,6 +131,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                         friends.addAll(Friends)
                         adapterFriends.submitList(friends)
                         adapterFriends.submitList(Friends)
+                        //TODO: untuk fungsi empty pada halaman home jika disearch tidak ada maka akan menampilkan gambar empty
                         if (friends.isEmpty()) {
                             binding.tvEmpty.visibility = View.VISIBLE
                         } else {
@@ -147,24 +153,32 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         viewModel.getListFriend()
     }
 
+    //TODO:notification
+    // untuk menunjukan ijin atau tidak dari askNotificationPermission untuk android 13
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            tos("Permission Granted")
+            //TODO: FCM SDK (and your app) can post notifications.
+            tos("Permission Granted") //todo:boleh
         } else {
-            tos("Permission Denied")
+            // TODO: Inform user that that your app will not show notifications.
+            tos("Permission Denied")  //todo:tidak boleh
         }
     }
 
+    //TODO: menunjukan aksinya
     private fun askNotificationPermission() {
+        //TODO: this is only necessary for API level >= 33 (TIRAMISU)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
                 PackageManager.PERMISSION_GRANTED
             ) {
+                //TODO: FCM SDK (and your app) can post notifications.
             } else
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                 } else {
+                    // TODO: directly ask for the permission
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
         }

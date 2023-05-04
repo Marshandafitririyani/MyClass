@@ -72,6 +72,8 @@ class ProfileActivity :
             schoolId = user.sekolah_id
             schoolIdStatic = user.sekolah_id
         }
+        //TODO: untuk tranformasi dari Sekolah_id ke nama sekolanya
+
         getlistSekolah(user?.sekolah_id)
     }
 
@@ -111,6 +113,7 @@ class ProfileActivity :
         }
     }
 
+    //TODO: untuk kompres foto
     suspend fun compressFile(filePhoto: File): File? {
         loadingDialog.show("Loading...")
         try {
@@ -157,6 +160,7 @@ class ProfileActivity :
     private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                //TODO: untuk getUser
                 launch {
                     viewModel.responseAPI.collect {
                         when (it.status) {
@@ -174,6 +178,7 @@ class ProfileActivity :
                         binding.user = it
                     }
                 }
+                //TODO: untuk fungsi logout
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
@@ -192,9 +197,8 @@ class ProfileActivity :
                             else -> loadingDialog.setResponse(it.message ?: return@collect)
                         }
                     }
-
-
                 }
+                //TODO: untuk fungsi save profile tanpa foto
                 launch {
                     viewModel.editProfile.collect {
                         when (it.status) {
@@ -207,18 +211,22 @@ class ProfileActivity :
                         }
                     }
                 }
+                //TODO: untuk transformasi dari sekolah_id menjadi sekolah_nama
                 launch {
                     viewModel.saveListSekolah.collect {
                         binding.tvSchoolProfile.text(it.sekolah)
                     }
 
                 }
+                //  TODO: untuk fungsii edit sekolah
+                //        Panggil fungsi untuk spinner item dengan data yang diambil
                 launch {
                     viewModel.saveListSekolahPopup.collect { school ->
                         listSchoolFilter.addAll(school)
 
                     }
                 }
+                //TODO: untuk fungsi save profile dengan foto
                 launch {
                     viewModel.editProfileWithPhoto.collect {
                         when (it.status) {
@@ -271,6 +279,7 @@ class ProfileActivity :
             val newPassword = editTextPasswordNw.textOf()
             val confirmPassword = editConfirmPassword.textOf()
 
+            //TODO: untuk memastikan apakah password sama dengan confirmasi password
             if (newPassword != confirmPassword) {
                 textConfirmPassword.visibility = View.VISIBLE
             } else {
@@ -343,6 +352,7 @@ class ProfileActivity :
         dialog.show()
     }
 
+    //todo: untuk fungsi edit foto ijin gallery
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -504,16 +514,20 @@ class ProfileActivity :
             ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listSchoolFilter)
         autoCompleteSpinner.setAdapter(adapter)
 
+        // TODO:menampilkan dropdown saat itmenya diklik
         autoCompleteSpinner.setOnClickListener {
             autoCompleteSpinner.showDropDown()
+            //TODO: untuk mengganti icon pensil menjadi icon drop down saat memilih sekolah
             binding.imgDropDrown.setImageResource(R.drawable.ic_baseline_arrow_drop_down_24)
             autoCompleteSpinner.setDropDownVerticalOffset(-autoCompleteSpinner.height)
 
         }
 
         autoCompleteSpinner.setOnItemClickListener { parent, view, position, id ->
+            // TODO:untuk selected itemenya
             val selectedItem = listSchoolFilter[position]
             schoolId = selectedItem?.sekolahId!!
+            //TODO: untuk mengganti incon drop down menjadi centang setelah  sekolah dipilih
             binding.imgDropDrown.setImageResource(R.drawable.ic_check_profile)
         }
         val btnSave = findViewById<ImageView>(R.id.img_drop_drown)
