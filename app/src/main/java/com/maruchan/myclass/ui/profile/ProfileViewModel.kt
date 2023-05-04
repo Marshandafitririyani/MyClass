@@ -36,7 +36,7 @@ class ProfileViewModel @Inject constructor(
     val user = _user.receiveAsFlow()
     val getUser = session.getUser()
 
-    //todo: lis school
+    //todo: list school
     private val _saveListSchool = MutableSharedFlow<ListSchool>()
     val saveListSekolah = _saveListSchool.asSharedFlow()
 
@@ -85,6 +85,7 @@ class ProfileViewModel @Inject constructor(
                 override suspend fun onSuccess(response: JSONObject) {
                     val data = response.getJSONArray("data").toList<ListSchool>(gson)
 
+                    //TODO: untuk mengubah sekolah_id menjadi sekolah_nama
                     val school = data.last { it.sekolah_id == id }
                     _saveListSchool.emit(school)
                 }

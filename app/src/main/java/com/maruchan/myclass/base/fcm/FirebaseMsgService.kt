@@ -31,7 +31,6 @@ class FirebaseMsgService : FirebaseMessagingService() {
 
         val context: Context = applicationContext
 
-
         //TODO: untuk mengecek
         Log.d("fcmServis", "messageData:${message.data}")
         Log.d("fcmServis", "message:${message.notification}")
@@ -39,9 +38,7 @@ class FirebaseMsgService : FirebaseMessagingService() {
         Timber.d("firebase_receive_message_title : ${message.data["title"]}")
         Timber.d("firebase_receive_message_message : ${message.data["body"]}")
 
-
-        //TODO:title, body, user_id diambil berdasarkan messagenya
-
+        //TODO:title, body, user_id diambil berdasarkan messageny
         showNotification(
             context,
             message.data["title"] ?: return,
@@ -59,7 +56,7 @@ private fun sendRegistrationToServer(token: String?) {
     Log.d(TAG, "sendRegistrationTokenToServer($token)")
 }
 
-//TODO: untuk edit notifikasinya, notifasi manager sudah ada di android
+//TODO: untuk edit notifikasinya, notifikasi manager sudah ada di android
 fun showNotification(context: Context, title: String, message: String, user_id: String) {
     //todo:Notification Manager
     val notificationManager =

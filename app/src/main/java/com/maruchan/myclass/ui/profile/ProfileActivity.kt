@@ -72,8 +72,8 @@ class ProfileActivity :
             schoolId = user.sekolah_id
             schoolIdStatic = user.sekolah_id
         }
-        //TODO: untuk tranformasi dari Sekolah_id ke nama sekolanya
 
+        //TODO: untuk tranformasi dari Sekolah_id ke nama sekolanya
         getlistSekolah(user?.sekolah_id)
     }
 
@@ -342,6 +342,7 @@ class ProfileActivity :
 
         val btnSaveName = customLayout.findViewById<TextView>(R.id.btn_save)
         btnSaveName.setOnClickListener {
+            //TODO: untuk memanggil data sebelumnya
             val user = session.getUser()
             viewModel.editProfile(name = editTextName.textOf(), schoolId = user?.sekolah_id)
 
@@ -523,11 +524,11 @@ class ProfileActivity :
 
         }
 
+        // TODO:untuk selected itemenya
         autoCompleteSpinner.setOnItemClickListener { parent, view, position, id ->
-            // TODO:untuk selected itemenya
             val selectedItem = listSchoolFilter[position]
             schoolId = selectedItem?.sekolahId!!
-            //TODO: untuk mengganti incon drop down menjadi centang setelah  sekolah dipilih
+            //TODO: untuk mengganti icon drop down menjadi centang setelah  sekolah dipilih
             binding.imgDropDrown.setImageResource(R.drawable.ic_check_profile)
         }
         val btnSave = findViewById<ImageView>(R.id.img_drop_drown)
