@@ -36,10 +36,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
         binding.tvSignUpAccount.setOnClickListener {
             tvRegister()
-//            RegisterActivity()
-        }
-        binding.login.setOnClickListener {
-            RegisterActivity()
+
         }
 
         binding.btnLogin.setOnClickListener {
@@ -82,7 +79,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         )
         binding.tvSignUpAccount.text = spannableString
         binding.tvSignUpAccount.movementMethod =
-            LinkMovementMethod.getInstance() // TODO: required for clickable spans to work
+            LinkMovementMethod.getInstance()
     }
 
     private fun observe() {
