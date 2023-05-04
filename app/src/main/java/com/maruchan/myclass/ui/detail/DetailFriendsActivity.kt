@@ -34,7 +34,6 @@ class DetailFriendsActivity :
         viewModel.getUserId(usersId ?: return)
 
     }
-
     private fun initClick() {
         binding.imgProfileDetail.setOnClickListener {
             ImagePreviewHelper(this).show(binding.imgProfileDetail, binding.user?.foto)

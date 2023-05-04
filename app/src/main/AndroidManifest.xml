@@ -17,13 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyClass"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.detailwa.DetailWaActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".ui.detail.DetailFriendsActivity"
             android:exported="false">
