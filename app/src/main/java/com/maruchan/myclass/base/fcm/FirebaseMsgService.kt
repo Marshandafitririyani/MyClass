@@ -84,24 +84,27 @@ fun showNotification(context: Context, title: String, message: String, user_id: 
     val detailIntent = Intent(context, DetailFriendsActivity::class.java).apply {
         Log.d("cek id", "cek id : $user_id")
         putExtra(Const.ID, user_id.toInt())
-        //TODO: untuk menutup activity yang sedang dibuka ketika melihat detail notifikasi
+        //TODO: untuk menutup activity yang sedang dibuka ketika melihat detail notifikasi(activity baru)
         flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }
 
     //TODO: untuk berpindah ke activity detail saat membuka notifikasinya
-    var resultPendingIntent: PendingIntent? =
-        PendingIntent.getActivity(
-            context, 1, detailIntent,
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT
-        )
+    var resultPendingIntent: PendingIntent? = PendingIntent.getActivity(
+        context, 1, detailIntent,
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT
+    )
 
     val stackBuilder = TaskStackBuilder.create(context)
     stackBuilder.addNextIntent(homeIntent)
     stackBuilder.addNextIntent(detailIntent)
-    //TODO: untuk menutup activity yang saat itu sedang dibuka ketika membuka detail pada notifikasi
-    resultPendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_CANCEL_CURRENT)
+    resultPendingIntent = stackBuilder.getPendingIntent(1,
+        //TODO: jika untuk android S atau 13 maka akan menggunakan immutable
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
+        //TODO: untuk menutup activity yang saat itu sedang dibuka ketika membuka detail pada notifikasi
+        // (ketika menekan tombol back maka akan kembalin ke home bukan ke detail yg sebelumnya dibuka)
+        else PendingIntent.FLAG_UPDATE_CURRENT)
 
-    //TODO: untuk edit titile, masage, logo
+    //TODO: untuk edit titile, message, logo
     // TODO:Builder
     val builder = NotificationCompat.Builder(context, "CHANNEL_ID")
         .setSmallIcon(R.drawable.img_logo)
