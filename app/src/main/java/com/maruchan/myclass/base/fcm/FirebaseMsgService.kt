@@ -17,7 +17,6 @@ import com.maruchan.myclass.R
 import com.maruchan.myclass.data.constant.Const
 import com.maruchan.myclass.ui.detail.DetailFriendsActivity
 import com.maruchan.myclass.ui.home.HomeActivity
-import timber.log.Timber
 
 class FirebaseMsgService : FirebaseMessagingService() {
 
@@ -30,9 +29,6 @@ class FirebaseMsgService : FirebaseMessagingService() {
         super.onMessageReceived(message)
 
         val context: Context = applicationContext
-
-        Log.d("fcmServis", "messageData:${message.data["title"]}")
-        Log.d("fcmServis", "message:${message.notification}")
 
         showNotification(
             context,
@@ -71,7 +67,6 @@ fun showNotification(context: Context, title: String, message: String, user_id: 
 
 
     val detailIntent = Intent(context, DetailFriendsActivity::class.java).apply {
-        Log.d("cek id", "cek id : $user_id")
         putExtra(Const.ID, user_id.toInt())
         flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }
@@ -86,7 +81,9 @@ fun showNotification(context: Context, title: String, message: String, user_id: 
     val stackBuilder = TaskStackBuilder.create(context)
     stackBuilder.addNextIntent(homeIntent)
     stackBuilder.addNextIntent(detailIntent)
-    resultPendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_CANCEL_CURRENT)
+    resultPendingIntent = stackBuilder.getPendingIntent(1,
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
+        else PendingIntent.FLAG_UPDATE_CURRENT)
 
 
     val builder = NotificationCompat.Builder(context, "CHANNEL_ID")

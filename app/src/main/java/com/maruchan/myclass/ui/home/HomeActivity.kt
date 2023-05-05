@@ -61,8 +61,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             binding.data = user
 
         }
-
-
     }
 
     private fun initClick() {
