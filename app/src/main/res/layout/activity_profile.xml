@@ -325,7 +325,7 @@
             android:layout_width="@dimen/_280sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_485sdp"
+            android:layout_marginTop="@dimen/_480sdp"
             android:background="@drawable/custom_bg_btn_lima"
             android:foreground="?selectableItemBackground"
             android:gravity="center"

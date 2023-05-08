@@ -288,13 +288,21 @@
             </LinearLayout>
         </FrameLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_500sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/btn_colek"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_gravity="start"
-            android:layout_marginTop="@dimen/_500sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/custom_bg_btn_tiga"
             android:foreground="?selectableItemBackground"
             android:gravity="center"
@@ -312,8 +320,7 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_gravity="end"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_500sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:background="@drawable/custom_bg_btn_empat"
             android:foreground="?selectableItemBackground"
             android:gravity="center"
@@ -325,6 +332,6 @@
             app:layout_constraintHorizontal_bias="0.843"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

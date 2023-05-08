@@ -84,7 +84,7 @@ fun showNotification(context: Context, title: String, message: String, user_id: 
     val detailIntent = Intent(context, DetailFriendsActivity::class.java).apply {
         Log.d("cek id", "cek id : $user_id")
         putExtra(Const.ID, user_id.toInt())
-        //TODO: untuk menutup activity yang sedang dibuka ketika melihat detail notifikasi(activity baru)
+        //TODO: untuk menutup activity yang sedang dibuka ketika melihat detail notifikasi dan menampilkan activity baru
         flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }
 

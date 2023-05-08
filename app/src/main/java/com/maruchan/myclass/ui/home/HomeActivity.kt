@@ -71,7 +71,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         binding.profileHome.setOnClickListener {
             //TODO; untuk reload profile di icon home
             activityLauncher.launch(createIntent<ProfileActivity>()) {
-                if (it.resultCode == 12345) {
+                if (it.resultCode == 12345   ) {
                     getUser()
                 }
             }
