@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.crocodic.core.api.ApiStatus
 import com.crocodic.core.extension.text
+import com.crocodic.core.extension.tos
 import com.crocodic.core.helper.ImagePreviewHelper
 import com.maruchan.myclass.R
 import com.maruchan.myclass.base.BaseActivity
@@ -44,6 +45,7 @@ class DetailFriendsActivity :
         }
 
         binding.btnColek.setOnClickListener {
+            tos("Done Colek")
             usersId?.let { it1 -> viewModel.getNotify(it1) }
         }
 
@@ -69,7 +71,7 @@ class DetailFriendsActivity :
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.saveListSekolah.collect {
+                    viewModel.saveListSchool.collect {
                         binding.tvSchoolDetail.text(it.sekolah)
                     }
                 }

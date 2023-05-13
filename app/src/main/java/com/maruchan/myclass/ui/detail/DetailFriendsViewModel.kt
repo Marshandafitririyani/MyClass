@@ -27,8 +27,8 @@ class DetailFriendsViewModel @Inject constructor(
     private val session: Session
 
 ) : BaseViewModel() {
-    private val _saveListSekolah = MutableSharedFlow<ListSchool>()
-    val saveListSekolah = _saveListSekolah.asSharedFlow()
+    private val _saveListSchool = MutableSharedFlow<ListSchool>()
+    val saveListSchool = _saveListSchool.asSharedFlow()
 
     private val _getNotifSave = MutableSharedFlow<ApiResponse>()
     val getNotifSave = _getNotifSave.asSharedFlow()
@@ -47,7 +47,7 @@ class DetailFriendsViewModel @Inject constructor(
                     val data = response.getJSONArray("data").toList<ListSchool>(gson)
 
                     val school = data.last { it.sekolah_id == id }
-                    _saveListSekolah.emit(school)
+                    _saveListSchool.emit(school)
                 }
 
                 override suspend fun onError(response: ApiResponse) {

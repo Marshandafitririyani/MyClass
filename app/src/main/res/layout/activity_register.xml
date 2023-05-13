@@ -10,11 +10,19 @@
         android:orientation="vertical"
         tools:context=".ui.register.RegisterActivity">
 
+        <ImageView
+            android:id="@+id/btn_back_reg"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/ic_back_green"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_60sdp"
-            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_60sdp"
             android:gravity="center"
             android:text="@string/register"
@@ -90,6 +98,7 @@
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/custom_layout_frame_green"
             android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
             android:dropDownAnchor="@id/auto_complete_spinner"
@@ -113,6 +122,7 @@
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
             app:hintEnabled="false"
             app:passwordToggleEnabled="true">
 
@@ -134,6 +144,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password of at least 6 characters"
+            android:layout_marginStart="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_60sdp"
+            android:gravity="start"/>
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_60sdp"
@@ -150,6 +168,7 @@
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
             app:hintEnabled="false"
             app:passwordToggleEnabled="true">
 
@@ -232,7 +251,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:contentDescription="@string/todo15"
             android:src="@drawable/img_ellipse" />
     </LinearLayout>

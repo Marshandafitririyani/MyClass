@@ -83,6 +83,7 @@
                 android:layout_width="@dimen/_200sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true">
 
@@ -128,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:gravity="center"
-                android:text="@string/don_t_have_an_accoun_sign_up"
+                android:text="@string/don_t_have_an_account_sign_up"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_13ssp" />
 

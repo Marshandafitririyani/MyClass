@@ -72,7 +72,7 @@ class ProfileActivity :
             schoolId = user.sekolah_id
             schoolIdStatic = user.sekolah_id
         }
-        getlistSekolah(user?.sekolah_id)
+        getListSchool(user?.sekolah_id)
     }
 
     private fun onClick() {
@@ -91,7 +91,7 @@ class ProfileActivity :
         }
 
         binding.btnEditPasswordProfile.setOnClickListener {
-            editPasswprd()
+            editPassword()
         }
 
         binding.tvSchoolProfile.setOnClickListener {
@@ -182,6 +182,8 @@ class ProfileActivity :
                             }
                             ApiStatus.SUCCESS -> {
                                 loadingDialog.dismiss()
+                                clearNotification()
+                                session.clearAll()
                                 openActivity<SplashActivity> {
                                     finishAffinity()
                                 }
@@ -208,13 +210,13 @@ class ProfileActivity :
                     }
                 }
                 launch {
-                    viewModel.saveListSekolah.collect {
+                    viewModel.saveListSchool.collect {
                         binding.tvSchoolProfile.text(it.sekolah)
                     }
 
                 }
                 launch {
-                    viewModel.saveListSekolahPopup.collect { school ->
+                    viewModel.saveListSchoolPopup.collect { school ->
                         listSchoolFilter.addAll(school)
 
                     }
@@ -242,7 +244,7 @@ class ProfileActivity :
         }
     }
 
-    private fun editPasswprd() {
+    private fun editPassword() {
         val builder = AlertDialog.Builder(this)
         val customLayout: View = layoutInflater.inflate(R.layout.popup_edit_password, null)
         builder.setView(customLayout)
@@ -307,9 +309,9 @@ class ProfileActivity :
     }
 
 
-    private fun getlistSekolah(id: Int?) {
+    private fun getListSchool(id: Int?) {
         id?.let {
-            viewModel.getListSekolah(id)
+            viewModel.getListSchool(id)
         }
 
     }
@@ -428,7 +430,7 @@ class ProfileActivity :
             photoFile = file
         } catch (e: Exception) {
             e.printStackTrace()
-            binding.root.snacked("File ini tidak dapat digunakan")
+            binding.root.snacked("This file cannot be used")
         }
     }
 

@@ -42,10 +42,13 @@ class RegisterActivity :
         binding.tvLogInRegister.setOnClickListener {
             finish()
         }
+        binding.btnBackReg.setOnClickListener {
+            finish()
+        }
     }
 
     private fun getListSchool() {
-        viewModel.getListSekolah()
+        viewModel.getListSchool()
     }
 
     private fun register() {
@@ -61,11 +64,9 @@ class RegisterActivity :
         ) {
             return
         }
-        if (password.length <= 5) {
+        if (password.length < 6) {
             binding.root.snacked("Password of at least 6 characters")
-        }
-
-            else {
+        } else {
             if (password != confirmPassword) {
                 binding.tvPasswordNotMatch.visibility = View.VISIBLE
             } else {
@@ -82,7 +83,7 @@ class RegisterActivity :
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
-                            ApiStatus.LOADING -> loadingDialog.show("Register...in")
+                            ApiStatus.LOADING -> loadingDialog.show("Please Wait Register...")
                             ApiStatus.SUCCESS -> {
                                 loadingDialog.dismiss()
                                 openActivity<LoginActivity>()
@@ -99,7 +100,7 @@ class RegisterActivity :
                     }
                 }
                 launch {
-                    viewModel.saveListSekolah.collect { school ->
+                    viewModel.saveListSchool.collect { school ->
                         listSchool.addAll(school)
 
                     }

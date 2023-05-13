@@ -37,10 +37,10 @@ class ProfileViewModel @Inject constructor(
     val getUser = session.getUser()
 
     private val _saveListSchool = MutableSharedFlow<ListSchool>()
-    val saveListSekolah = _saveListSchool.asSharedFlow()
+    val saveListSchool = _saveListSchool.asSharedFlow()
 
-    private val _saveListSekolahPopup = MutableSharedFlow<List<ListSchoolTwo>>()
-    val saveListSekolahPopup = _saveListSekolahPopup.asSharedFlow()
+    private val _saveListSchoolPopup = MutableSharedFlow<List<ListSchoolTwo>>()
+    val saveListSchoolPopup = _saveListSchoolPopup.asSharedFlow()
 
     private val _responseAPI = MutableSharedFlow<ApiResponse>()
     val responseAPI = _responseAPI.asSharedFlow()
@@ -70,7 +70,7 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
-    fun getListSekolah(id: Int) = viewModelScope.launch {
+    fun getListSchool(id: Int) = viewModelScope.launch {
         _apiResponse.emit(ApiResponse().responseLoading())
         ApiObserver(
             { apiService.getListSchool() },
@@ -93,15 +93,9 @@ class ProfileViewModel @Inject constructor(
     fun getListSchoolEdit() = viewModelScope.launch {
         ApiObserver({ apiService.getListSchool() }, false, object : ApiObserver.ResponseListener {
             override suspend fun onSuccess(response: JSONObject) {
-                val status = response.getInt(ApiCode.STATUS)
-                if (status == ApiCode.SUCCESS) {
+                val data = response.getJSONArray(ApiCode.DATA).toList<ListSchoolTwo>(gson)
+                _saveListSchoolPopup.emit(data)
 
-                    val data = response.getJSONArray(ApiCode.DATA).toList<ListSchoolTwo>(gson)
-                    _saveListSekolahPopup.emit(data)
-
-                } else {
-                    val message = response.getString(ApiCode.MESSAGE)
-                }
             }
         })
     }
@@ -164,8 +158,8 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
-    fun editPassword(current_password: String?, new_password: String?) = viewModelScope.launch {
-        ApiObserver({ apiService.editPassword(current_password, new_password) },
+    fun editPassword(currentPassword: String?, newPassword: String?) = viewModelScope.launch {
+        ApiObserver({ apiService.editPassword(currentPassword, newPassword) },
             false, object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
                     _editProfile.emit(ApiResponse().responseSuccess("Profile Updated"))

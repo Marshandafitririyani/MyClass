@@ -64,8 +64,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
 
     }
+
     private fun tvRegister() {
-        val spannableString = SpannableString("Don't have an accoun? Sign up")
+        val spannableString = SpannableString("Don't have an account? Sign up")
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(view: View) {
                 openActivity<RegisterActivity>()
