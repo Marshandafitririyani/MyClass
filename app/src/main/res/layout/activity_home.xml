@@ -55,7 +55,6 @@
             android:hint="@string/search"
             android:imeOptions="actionSearch"
             android:inputType="text"
-            android:padding="@dimen/_6sdp"
             android:paddingStart="@dimen/_15sdp"
             app:defaultQueryHint="search notes"
             app:layout_constraintEnd_toEndOf="parent"
