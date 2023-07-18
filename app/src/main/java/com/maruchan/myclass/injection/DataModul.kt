@@ -68,7 +68,8 @@ class DataModul {
     @Provides
     fun provideApiService(okHttpClient: OkHttpClient): ApiService {
         return Retrofit.Builder()
-            .baseUrl("https://magang.crocodic.net/ki/Rainer/KI_Advance_Kelasku/public/")
+//            .baseUrl("https://magang.crocodic.net/ki/Rainer/KI_Advance_Kelasku/public/")
+            .baseUrl(com.maruchan.myclass.BuildConfig.API_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
             .client(okHttpClient)
             .build().create(ApiService::class.java)
