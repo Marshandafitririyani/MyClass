@@ -149,9 +149,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            tos("Permission Granted")
+            tos(R.string.permission_granted)
         } else {
-            tos("Permission Denied")
+            tos(R.string.permission_denied)
         }
     }
 

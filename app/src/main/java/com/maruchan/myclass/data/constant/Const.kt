@@ -11,4 +11,8 @@ object Const {
     }
 
     const val ID = "user_id"
+
+    object TIMEOUT {
+        const val NINETY_LONG = 90L
+    }
 }

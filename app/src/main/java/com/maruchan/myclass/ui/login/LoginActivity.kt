@@ -58,7 +58,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             }
             val token = task.result
             val msg = getString(R.string.msg_token_fmt, token)
-            Log.d(ContentValues.TAG, msg)
             session.setValue(Const.TOKEN.DEVICETOKEN, token)
         })
 
@@ -89,7 +88,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
-                            ApiStatus.LOADING -> loadingDialog.show("Please Wait login")
+                            ApiStatus.LOADING -> loadingDialog.show(R.string.loading)
                             ApiStatus.SUCCESS -> {
                                 loadingDialog.dismiss()
                                 openActivity<HomeActivity>()

@@ -19,8 +19,17 @@
     <string name="nomor_telephone">Phone Number</string>
     <string name="add_nomor_telephone">Add Phone</string>
     <string name="password">Password</string>
+    <string name="password_characters">Password of at least 6 characters</string>
+    <string name="succes">Succes</string>
+    <string name="register_failed">Register Failed</string>
+    <string name="file">This file cannot be used</string>
+    <string name="register_loading">Please Wait Register…</string>
+    <string name="Gallery">Gallery permission denied</string>
     <string name="add_password">Add Password</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="save_profile_photo">Save Profile With Photo</string>
     <string name="login2">Login</string>
+    <string name="compress">If you fail to compress, you can replace another photo</string>
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign up</string>
     <string name="todo10">TODO</string>
     <string name="todo11">TODO</string>
@@ -49,7 +58,7 @@
     <string name="marshanda_fitri_riyani">Marshanda Fitri Riyani</string>
     <string name="smk_n_11_semarang">SMK N 11 Semarang</string>
     <string name="enter_a_new_name">Enter A New Name</string>
-    <string name="add_name2">Add Name...</string>
+    <string name="add_name2">Add Name…</string>
     <string name="save">Save</string>
     <string name="password_old">Password Old</string>
     <string name="password_new">Password New</string>
@@ -62,9 +71,14 @@
     <string name="yes_i_want_logout">Yes, i want Logout</string>
     <string name="msg_token_fmt" formatted="true"> %s Token Confirmed</string>
     <string name="select_school">Select School</string>
+    <string name="done_colek">Done Colek</string>
+    <string name="permission_granted">Permission Granted</string>
+    <string name="permission_denied">Permission Denied</string>
     <string name="empty_name">Empty Name</string>
     <string name="empty_school">Empty School</string>
     <string name="empty_phone">Empty Phone</string>
+    <string name="loading">Loading…</string>
+    <string name="Dont_have_an_account">Dont have an account? Sign up</string>
     <string name="search">Search</string>
     <string name="password_didn_t_match">Password didn\'t match</string>
     <string name="add_school">Add School</string>

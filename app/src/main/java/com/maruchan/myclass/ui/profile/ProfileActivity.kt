@@ -121,7 +121,7 @@ class ProfileActivity :
                 size(515)
             }
         } catch (e: Exception) {
-            binding.root.snacked("Gagal kompress anda bisa mengganti foto lain")
+            binding.root.snacked(R.string.compress)
             e.printStackTrace()
             return null
         }
@@ -200,7 +200,7 @@ class ProfileActivity :
                 launch {
                     viewModel.editProfile.collect {
                         when (it.status) {
-                            ApiStatus.LOADING -> loadingDialog.show("Save Profile")
+                            ApiStatus.LOADING -> loadingDialog.show(R.string.save_profile)
                             ApiStatus.SUCCESS -> {
                                 loadingDialog.dismiss()
                                 finish()
@@ -224,9 +224,9 @@ class ProfileActivity :
                 launch {
                     viewModel.editProfileWithPhoto.collect {
                         when (it.status) {
-                            ApiStatus.LOADING -> loadingDialog.show("Save Profile With Photo")
+                            ApiStatus.LOADING -> loadingDialog.show(R.string.save_profile_photo)
                             ApiStatus.SUCCESS -> {
-                                loadingDialog.show("succes")
+                                loadingDialog.show(R.string.succes)
                                 loadingDialog.dismiss()
                                 setResult(12345)
                                 finish()
@@ -356,7 +356,7 @@ class ProfileActivity :
             if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 openGallery()
             } else {
-                Toast.makeText(this, "Ijin gallery ditolak", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.Gallery, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -430,7 +430,7 @@ class ProfileActivity :
             photoFile = file
         } catch (e: Exception) {
             e.printStackTrace()
-            binding.root.snacked("This file cannot be used")
+            binding.root.snacked(R.string.file)
         }
     }
 

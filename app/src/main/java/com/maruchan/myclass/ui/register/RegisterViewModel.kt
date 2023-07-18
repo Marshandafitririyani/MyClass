@@ -43,15 +43,11 @@ class RegisterViewModel @Inject constructor(
                     override suspend fun onSuccess(response: JSONObject) {
                         _apiResponse.emit(ApiResponse().responseSuccess())
                         val message = response.getString(ApiCode.MESSAGE)
-                        _apiResponse.emit(
-                            ApiResponse(
-                                status = ApiStatus.SUCCESS,
-                                message = message
-                            )
-                        )
+                        _apiResponse.emit(ApiResponse(status = ApiStatus.SUCCESS, message = message))
                     }
 
-                })
+                }
+            )
         }
 
     fun getListSchool() = viewModelScope.launch {

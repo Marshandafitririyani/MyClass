@@ -35,6 +35,7 @@ class DetailFriendsActivity :
         viewModel.getUserId(usersId ?: return)
 
     }
+
     private fun initClick() {
         binding.imgProfileDetail.setOnClickListener {
             ImagePreviewHelper(this).show(binding.imgProfileDetail, binding.user?.foto)
@@ -45,7 +46,7 @@ class DetailFriendsActivity :
         }
 
         binding.btnColek.setOnClickListener {
-            tos("Done Colek")
+            tos(R.string.done_colek)
             usersId?.let { it1 -> viewModel.getNotify(it1) }
         }
 

@@ -37,8 +37,7 @@ class LoginViewModel @Inject constructor(
             false,
             object : ApiObserver.ResponseListener {
                 override suspend fun onSuccess(response: JSONObject) {
-                    val token = response.getJSONObject("data").getJSONObject("token")
-                        .getString("access_token")
+                    val token = response.getJSONObject("data").getJSONObject("token").getString("access_token")
                     session.setValue(Const.TOKEN.API_TOKEN, token)
                     _apiResponse.emit(ApiResponse().responseSuccess())
                 }

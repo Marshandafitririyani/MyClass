@@ -65,7 +65,7 @@ class RegisterActivity :
             return
         }
         if (password.length < 6) {
-            binding.root.snacked("Password of at least 6 characters")
+            binding.root.snacked(R.string.password_characters)
         } else {
             if (password != confirmPassword) {
                 binding.tvPasswordNotMatch.visibility = View.VISIBLE
@@ -83,7 +83,7 @@ class RegisterActivity :
                 launch {
                     viewModel.apiResponse.collect {
                         when (it.status) {
-                            ApiStatus.LOADING -> loadingDialog.show("Please Wait Register...")
+                            ApiStatus.LOADING -> loadingDialog.show(R.string.register_loading)
                             ApiStatus.SUCCESS -> {
                                 loadingDialog.dismiss()
                                 openActivity<LoginActivity>()
@@ -91,7 +91,7 @@ class RegisterActivity :
                             }
                             ApiStatus.ERROR -> {
                                 disconnect(it)
-                                binding.root.snacked("Register Failed")
+                                binding.root.snacked(R.string.register_failed)
                                 loadingDialog.setResponse(it.message ?: return@collect)
 
                             }
